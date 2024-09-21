@@ -1,17 +1,18 @@
 @extends('admin.layouts.master')
-@section('mainTitle', 'Category')
+@section('mainTitle', __('Education tracks'))
 @section('content')
 
     <div class="card-header">
-        <h4>Edit category</h4>
+        <h4>{{ __('Edit track') }}</h4>
         <div class="card-header-action">
         </div>
     </div>
+
     <div class="card-body">
-        <form action="{{ route('admin.sub-category.update', $subCategory->id) }}" method="POST">
+        <form action="{{ route('admin.track.update', $track->id) }}" method="POST">
             @csrf
             @method('PUT')
-            @include('admin.sub-category._form', ['buttonLabel' => 'Update'])
+            @include('admin.track._form', ['buttonLabel' => 'Update'])
         </form>
     </div>
 

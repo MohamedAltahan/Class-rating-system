@@ -1,30 +1,29 @@
 @extends('admin.layouts.master')
-@section('mainTitle', 'Designs')
+@section('mainTitle', __('Teacher'))
 @section('content')
-    <!-- Main Content -->
 
     <div class="card-header">
-        <h4>All designs</h4>
+        <h4>{{ __('All teachers') }}</h4>
         <div class="card-header-action">
-            <a href="{{ route('admin.design.create') }}" class="btn btn-primary">+ Create New Design</a>
+            <a href="{{ route('admin.teacher.create') }}" class="btn btn-primary">{{ __('+ Create new') }}</a>
         </div>
     </div>
     <div class="card-body">
         {{ $dataTable->table() }}
     </div>
 
-    {{-- scripts------------------------------------------------------- --}}
+    {{-- scripts ----------------------------------------------------------- --}}
     @push('scripts')
         {{ $dataTable->scripts(attributes: ['type' => 'module']) }}
         <script>
-            // change status-------------------------------------------------------
             $(document).ready(function() {
+
                 $('body').on('click', '.change-status', function() {
                     let isChecked = $(this).is(':checked');
                     let id = $(this).data('id');
                     $.ajax({
                         method: 'PUT',
-                        url: "{{ route('admin.design.change-status') }}",
+                        url: "{{ route('admin.teacher.change-status') }}",
                         data: {
                             // status is the name of the value "ischecked" in you php function
                             status: isChecked,

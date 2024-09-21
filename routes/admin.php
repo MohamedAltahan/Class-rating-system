@@ -3,8 +3,8 @@
 use App\Http\Controllers\Backend\AboutController;
 use App\Http\Controllers\Backend\AdminController;
 use App\Http\Controllers\Backend\AdminProfileController;
-use App\Http\Controllers\Backend\CategoryController;
-use App\Http\Controllers\Backend\DesignController;
+use App\Http\Controllers\Backend\TeacherController;
+use App\Http\Controllers\Backend\TrackController;
 use App\Http\Controllers\Backend\SettingController;
 use App\Http\Controllers\Backend\SubCategoryController;
 use App\Http\Controllers\Backend\ShowDesignController;
@@ -30,9 +30,9 @@ Route::group(
         Route::put('logo-setting-update', [SettingController::class, 'logoSettingUpdate'])->name('logo-setting-update.update');
         Route::put('general-settnig-update', [SettingController::class, 'generalSettingUpdate'])->name('general-setting-update.index');
 
-        //category routes__________________________________________________________________________________________
-        Route::put('category/change-status', [CategoryController::class, 'changeStatus'])->name('category.change-status');
-        Route::resource('category', CategoryController::class);
+        //teacher routes__________________________________________________________________________________________
+        Route::put('teacher/change-status', [TeacherController::class, 'changeStatus'])->name('teacher.change-status');
+        Route::resource('teacher', TeacherController::class);
 
         //sub category routes_______________________________________________________________________________________
         Route::put('sub-category/change-status', [SubCategoryController::class, 'changeStatus'])->name('sub-category.change-status');
@@ -50,12 +50,8 @@ Route::group(
         Route::put('media-on-home-page', [HomePageSettingController::class, 'mediaOnHomePageUpdate'])->name('media-on-home-page.update');
 
         //desgin _____________________________________________________________________________
-        Route::put('update-video-thumbnail/{id}', [DesignController::class, 'updateVideoThumbnail'])->name('update-video-thumbnail');
-        Route::delete('design/delete-design-video', [DesignController::class, 'deleteDesignVideo'])->name('design.delete-design-video');
-        Route::delete('design/delete-design-image', [DesignController::class, 'deleteDesignImage'])->name('design.delete-design-image');
-        Route::delete('design/delete-video-thumbnail', [DesignController::class, 'deleteVideoThumbnail'])->name('design.delete-video-thumbnail');
-        Route::put('design/change-status', [DesignController::class, 'changeStatus'])->name('design.change-status');
-        Route::resource('design', DesignController::class);
+        Route::put('track/change-status', [TrackController::class, 'changeStatus'])->name('track.change-status');
+        Route::resource('track', TrackController::class);
 
         //show desgins page____________________________________________________________________________________
         Route::get('show-designs', [ShowDesignController::class, 'index'])->name('show-designs.index');

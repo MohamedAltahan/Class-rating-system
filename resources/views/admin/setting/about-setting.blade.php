@@ -7,14 +7,14 @@
 
                 <div class="form-group">
                     <label for="">
-                        <h4>About you</h4>
+                        <h4>{{ __('About you') }}</h4>
                     </label>
                     <textarea class="form-control summernote" name="content">
                         {{ @$content->content }}
                     </textarea>
                 </div>
 
-                <button type="submit" class="btn btn-primary">Update</button>
+                <button type="submit" class="btn btn-primary">{{ __('Update') }}</button>
             </form>
         </div>
     </div>

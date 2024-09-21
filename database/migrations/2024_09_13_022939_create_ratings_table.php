@@ -11,13 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('designs', function (Blueprint $table) {
+        Schema::create('ratings', function (Blueprint $table) {
             $table->id();
-            $table->text('name');
-            $table->text('thumbnail')->nullable();
-            $table->text('category_id');
-            $table->text('sub_category_id')->nullable();
-            $table->enum('status', ['active', 'inactive']);
+            $table->foreignId('class_id')->constrained('classes')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade'); // Student who rated the class
+            $table->unsignedTinyInteger('rating')->comment('Rating from 1 to 5');
             $table->timestamps();
         });
     }
@@ -27,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('designs');
+        Schema::dropIfExists('ratings');
     }
 };

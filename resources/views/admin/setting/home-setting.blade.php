@@ -7,7 +7,8 @@
 
                 <div class="row">
                     <div class="col-md-4">
-                        <label for="status-on-frontend" style="color: red">show (banner) on the Home page:</label>
+                        <label for="status-on-frontend"
+                            style="color: red">{{ __('show (banner) on the Home page:') }}</label>
                     </div>
                     <div class="col-md-2 ">
                         <label class="custom-switch ">
@@ -25,16 +26,16 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="">Main title</label>
+                    <label for="">{{ __('Main title') }}</label>
                     <textarea class="form-control summernote" name="main_title">{{ @$homePage->main_title }}</textarea>
                 </div>
 
                 <div class="form-group">
-                    <label for="">Description (will appear under "main title")</label>
+                    <label for="">{{ __("Description (will appear under 'main title'") }}</label>
                     <textarea class="form-control summernote" name="description" label='description'>{{ @$homePage->description }}</textarea>
                 </div>
 
-                <button type="submit" class="btn btn-primary">Update</button>
+                <button type="submit" class="btn btn-primary">{{ __('Update') }}</button>
             </form>
         </div>
     </div>

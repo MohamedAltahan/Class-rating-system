@@ -6,37 +6,37 @@
                 @method('PUT')
 
                 <div class="col-3 form-group">
-                    <label for="ColorInput" class="form-label">Main background</label>
+                    <label for="ColorInput" class="form-label">{{ __('Main background') }}</label>
                     <input type="color" name="main_background" class="form-control form-control-color" id="ColorInput"
                         value="{{ $color->main_background }}" title="Choose your color">
                 </div>
                 <div class="col-3 form-group">
-                    <label for="ColorInput" class="form-label">Secondary background</label>
+                    <label for="ColorInput" class="form-label">{{ __('Secondary background') }}</label>
                     <input type="color" name="secondary_background" class="form-control form-control-color"
                         id="ColorInput" value="{{ $color->secondary_background }}" title="Choose your color">
                 </div>
                 <div class="col-3 form-group">
-                    <label for="ColorInput" class="form-label">Main banner</label>
+                    <label for="ColorInput" class="form-label">{{ __('Main banner') }}</label>
                     <input type="color" name="main_banner" class="form-control form-control-color" id="ColorInput"
                         value="{{ $color->main_banner }}" title="Choose your color">
                 </div>
                 <div class="col-3 form-group">
-                    <label for="ColorInput" class="form-label">Buttons</label>
+                    <label for="ColorInput" class="form-label">{{ __('Buttons') }}</label>
                     <input type="color" name="btn" class="form-control form-control-color" id="ColorInput"
                         value="{{ $color->btn }}" title="Choose your color">
                 </div>
                 <div class="col-3 form-group">
-                    <label for="ColorInput" class="form-label">Main Navigation Bar</label>
+                    <label for="ColorInput" class="form-label">{{ __('Main Navigation Bar') }}</label>
                     <input type="color" name="navbar" class="form-control form-control-color" id="ColorInput"
                         value="{{ $color->navbar }}" title="Choose your color">
                 </div>
                 <div class="col-3 form-group">
-                    <label for="ColorInput" class="form-label">text of Navigation Bar</label>
+                    <label for="ColorInput" class="form-label">{{ __('text of Navigation Bar') }}</label>
                     <input type="color" name="text" class="form-control form-control-color" id="ColorInput"
                         value="{{ $color->text }}" title="Choose your color">
                 </div>
                 <div class="text-center">
-                    <button type="submit" class="btn btn-primary ">Update</button>
+                    <button type="submit" class="btn btn-primary ">{{ __('Update') }}</button>
                 </div>
             </form>
         </div>
