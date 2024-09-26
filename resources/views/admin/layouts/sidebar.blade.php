@@ -36,7 +36,7 @@
                     class="nav-link "><i class="fas fa-pen-fancy"></i><span>{{ __('Education tracks') }}</span></a>
             </li>
 
-            <li class="{{ setActive(['admin.track.*']) }}"><a href="{{ route('admin.track.index') }}"
+            <li class="{{ setActive(['admin.material.*']) }}"><a href="{{ route('admin.material.index') }}"
                     class="nav-link "><i class="fas fa-pen-fancy"></i><span>{{ __('Materials') }}</span></a>
             </li>
 

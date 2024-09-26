@@ -13,7 +13,7 @@
 </div>
 
 <div class="form-group">
-    <label for="">{{ __('status') }}</label>
+    <label for="">{{ __('Status') }}</label>
     <select name="status" class="form-control">
         <option value="active" @selected(@$teacher->status == 'active')>{{ __('Active') }}</option>
         <option value="inactive" @selected(@$teacher->status == 'inactive')>{{ __('Inactive') }}</option>

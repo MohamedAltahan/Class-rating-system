@@ -10,6 +10,7 @@ use App\Http\Controllers\Backend\SubCategoryController;
 use App\Http\Controllers\Backend\ShowDesignController;
 use App\Http\Controllers\Backend\EmailInboxController;
 use App\Http\Controllers\Backend\HomePageSettingController;
+use App\Http\Controllers\Backend\MaterialController;
 use App\Http\Controllers\Backend\SocialController;
 use App\Http\Controllers\Backend\StudentController;
 use App\Http\Controllers\Backend\StudyYearController;
@@ -36,14 +37,18 @@ Route::group(
         //student
         Route::put('student/change-status', [StudentController::class, 'changeStatus'])->name('student.change-status');
         Route::resource('student', StudentController::class);
-        //teacher
 
+        //teacher
         Route::put('teacher/change-status', [TeacherController::class, 'changeStatus'])->name('teacher.change-status');
         Route::resource('teacher', TeacherController::class);
 
-        //teacher
+        //study year
         Route::put('study-year/change-status', [StudyYearController::class, 'changeStatus'])->name('study-year.change-status');
         Route::resource('study-year', StudyYearController::class);
+
+        //Materials
+        Route::put('material/change-status', [MaterialController::class, 'changeStatus'])->name('material.change-status');
+        Route::resource('material', MaterialController::class);
 
         // update About page
         Route::put('about/update', [AboutController::class, 'update'])->name('about.update');

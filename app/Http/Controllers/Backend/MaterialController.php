@@ -2,21 +2,21 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\DataTables\studyYearDataTable;
+use App\DataTables\MaterialDataTable;
 use App\Http\Controllers\Controller;
-use App\Models\StudyYear;
+use App\Models\Material;
 use Illuminate\Http\Request;
 
-class StudyYearController extends Controller
+class MaterialController extends Controller
 {
-    public function index(studyYearDataTable $dataTable)
+    public function index(MaterialDataTable $dataTable)
     {
-        return $dataTable->render('admin.study-year.index');
+        return $dataTable->render('admin.material.index');
     }
 
     public function create()
     {
-        return view('admin.study-year.create');
+        return view('admin.material.create');
     }
 
     public function store(Request $request)
@@ -26,42 +26,42 @@ class StudyYearController extends Controller
             'status' => ['in:active,inactive']
         ]);
 
-        StudyYear::create($data);
+        Material::create($data);
 
         toastr(__('Created Successfully'));
 
-        return redirect()->route('admin.study-year.index');
+        return redirect()->route('admin.material.index');
     }
 
     public function edit($id)
     {
-        $studyYear = StudyYear::findOrFail($id);
+        $material = Material::findOrFail($id);
 
-        return view('admin.study-year.edit', compact('studyYear'));
+        return view('admin.material.edit', compact('material'));
     }
 
     public function update(Request $request, string $id)
     {
-        $studyYear = StudyYear::findOrFail($id);
+        $material = Material::findOrFail($id);
 
         $data = $request->validate([
             'name' => 'required|string|max:100',
             'status' => 'required|in:active,inactive'
         ]);
-        $studyYear->update($data);
+        $material->update($data);
 
         toastr(__('Updated Successfully'));
 
-        return redirect()->route('admin.study-year.index');
+        return redirect()->route('admin.material.index');
     }
 
     public function changeStatus(Request $request)
     {
-        $studyYear = StudyYear::findOrFail($request->id);
+        $material = Material::findOrFail($request->id);
 
-        $request->status == "true" ? $studyYear->status = 'active' : $studyYear->status = 'inactive';
-        $studyYear->save();
+        $request->status == "true" ? $material->status = 'active' : $material->status = 'inactive';
+        $material->save();
 
         return response(['message' => __('Status has been updated')]);
-    }
+    }  //
 }

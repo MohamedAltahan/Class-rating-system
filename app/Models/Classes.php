@@ -11,6 +11,7 @@ class Classes extends Model
 
     protected $fillable = [
         'name',
+        'material_id',
         'teacher_id',
         'description',
         'study_year_id',

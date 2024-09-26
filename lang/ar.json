@@ -24,6 +24,7 @@
     "About you": "من نحن",
     "id": "المسلسل",
     "status": "حالة التفعيل",
+    "Status": "حالة التفعيل",
     "name": "الإسم",
     "action": "الإجراءات",
     "Edit": "تعديل",
@@ -54,6 +55,9 @@
     "Study years": "",
     "Study year name": "",
     "Materials": "",
+    "Material name": "",
+    "Create study year": "",
+    "All materials": "",
     "All study years": "",
     "Created Successfully": ""
 }
