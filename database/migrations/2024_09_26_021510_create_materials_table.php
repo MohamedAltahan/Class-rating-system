@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('study_years', function (Blueprint $table) {
+        Schema::create('materials', function (Blueprint $table) {
             $table->id();
-            $table->string('year_name'); // E.g., "1st Year", "2nd Year"
+            $table->string('name');
             $table->enum('status', ['active', 'inactive']);
             $table->timestamps();
         });
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('study_years');
+        Schema::dropIfExists('materials');
     }
 };

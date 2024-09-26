@@ -10,7 +10,8 @@ class StudyYear extends Model
     use HasFactory;
 
     protected $fillable = [
-        'year_name',
+        'name',
+        'status'
     ];
 
     // Relationships
