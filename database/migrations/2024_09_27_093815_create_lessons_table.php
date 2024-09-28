@@ -11,10 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('materials', function (Blueprint $table) {
+        Schema::create('lessons', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->foreignId('name')->constrained('tracks')->onDelete('restrict');
+            $table->foreignId('material_id')->constrained('materials')->onDelete('restrict');
+            $table->foreignId('teacher_id')->constrained('users')->onDelete('restrict');
+            $table->dateTime('date_time');
             $table->enum('status', ['active', 'inactive']);
             $table->timestamps();
         });
@@ -25,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('materials');
+        Schema::dropIfExists('lessons');
     }
 };

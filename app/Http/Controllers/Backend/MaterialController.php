@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\DataTables\MaterialDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\Material;
+use App\Models\Track;
 use Illuminate\Http\Request;
 
 class MaterialController extends Controller
@@ -16,14 +17,17 @@ class MaterialController extends Controller
 
     public function create()
     {
-        return view('admin.material.create');
+        $tracks = Track::all();
+        return view('admin.material.create', compact('tracks'));
     }
 
     public function store(Request $request)
     {
         $data =  $request->validate([
             'name' => ['string', 'max:150'],
-            'status' => ['in:active,inactive']
+            'status' => ['in:active,inactive'],
+            'track_id' => ['required', 'exists:tracks,id']
+
         ]);
 
         Material::create($data);
@@ -36,8 +40,8 @@ class MaterialController extends Controller
     public function edit($id)
     {
         $material = Material::findOrFail($id);
-
-        return view('admin.material.edit', compact('material'));
+        $tracks = Track::all();
+        return view('admin.material.edit', compact('material', 'tracks'));
     }
 
     public function update(Request $request, string $id)
@@ -46,7 +50,9 @@ class MaterialController extends Controller
 
         $data = $request->validate([
             'name' => 'required|string|max:100',
-            'status' => 'required|in:active,inactive'
+            'status' => 'required|in:active,inactive',
+            'track_id' => ['required', 'exists:tracks,id']
+
         ]);
         $material->update($data);
 
@@ -63,5 +69,5 @@ class MaterialController extends Controller
         $material->save();
 
         return response(['message' => __('Status has been updated')]);
-    }  //
+    }
 }

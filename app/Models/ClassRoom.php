@@ -5,18 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Material extends Model
+class ClassRoom extends Model
 {
     use HasFactory;
-
     protected $fillable = [
         'name',
         'status',
-        'track_id'
     ];
-
-    public function track()
-    {
-        return $this->belongsTo(track::class);
-    }
 }

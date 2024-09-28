@@ -3,6 +3,7 @@
 use App\Http\Controllers\Backend\AboutController;
 use App\Http\Controllers\Backend\AdminController;
 use App\Http\Controllers\Backend\AdminProfileController;
+use App\Http\Controllers\Backend\ClassesController;
 use App\Http\Controllers\Backend\TeacherController;
 use App\Http\Controllers\Backend\TrackController;
 use App\Http\Controllers\Backend\SettingController;
@@ -10,12 +11,15 @@ use App\Http\Controllers\Backend\SubCategoryController;
 use App\Http\Controllers\Backend\ShowDesignController;
 use App\Http\Controllers\Backend\EmailInboxController;
 use App\Http\Controllers\Backend\HomePageSettingController;
+use App\Http\Controllers\Backend\LessonController;
 use App\Http\Controllers\Backend\MaterialController;
+use App\Http\Controllers\Backend\RatingController;
 use App\Http\Controllers\Backend\SocialController;
 use App\Http\Controllers\Backend\StudentController;
 use App\Http\Controllers\Backend\StudyYearController;
 use App\Http\Controllers\Backend\WebsiteColorController;
-use App\Models\StudyYear;
+use App\Http\Controllers\Backend\ClassRoomController;
+use App\Http\Controllers\ImportExcelController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(
@@ -28,6 +32,9 @@ Route::group(
         Route::get('profile', [AdminProfileController::class, 'index'])->name('profile');
         Route::post('profile/update', [AdminProfileController::class, 'profileUpdate'])->name('profile.update');
         Route::post('profile/update/password', [AdminProfileController::class, 'passwordUpdate'])->name('password.update');
+
+        //import
+        Route::get('import', [ImportExcelController::class, 'import'])->name('import');
 
         //settigs
         Route::get('settings', [SettingController::class, 'index'])->name('settings.index');
@@ -46,9 +53,24 @@ Route::group(
         Route::put('study-year/change-status', [StudyYearController::class, 'changeStatus'])->name('study-year.change-status');
         Route::resource('study-year', StudyYearController::class);
 
+        //class
+        Route::put('class/change-status', [ClassesController::class, 'changeStatus'])->name('class.change-status');
+        Route::resource('class', ClassesController::class);
+
+        //class rooms
+        Route::put('class-room/change-status', [ClassRoomController::class, 'changeStatus'])->name('class-room.change-status');
+        Route::resource('class-room', ClassRoomController::class);
+
         //Materials
         Route::put('material/change-status', [MaterialController::class, 'changeStatus'])->name('material.change-status');
         Route::resource('material', MaterialController::class);
+
+        //Materials
+        Route::put('lesson/change-status', [LessonController::class, 'changeStatus'])->name('lesson.change-status');
+        Route::resource('lesson', LessonController::class);
+
+        //ratings
+        Route::get('rating', [RatingController::class, 'index'])->name('rating.index');
 
         // update About page
         Route::put('about/update', [AboutController::class, 'update'])->name('about.update');

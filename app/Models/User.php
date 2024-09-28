@@ -38,6 +38,8 @@ class User extends Authenticatable
         'description',
         'email_verified_at',
         'password',
+        'track_id',
+        'class_room_id'
     ];
 
     /**

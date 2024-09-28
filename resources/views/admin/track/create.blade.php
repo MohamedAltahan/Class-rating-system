@@ -3,7 +3,7 @@
 @section('content')
 
     <div class="card-header">
-        <h4>{{ __('Create teacher') }}</h4>
+        <h4>{{ __('Create track') }}</h4>
         <div class="card-header-action">
         </div>
     </div>

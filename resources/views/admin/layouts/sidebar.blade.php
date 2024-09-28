@@ -7,17 +7,14 @@
         <ul class="sidebar-menu">
 
 
-            {{-- ___________________________setting__________________________________________________ --}}
-            <li class="menu-header" style="color: black"> </i>الاعدادت</li>
+            {{-- ___________________________ ratings __________________________________________________ --}}
+            <li class="menu-header" style="color: black"> </i>{{ __('Ratings') }}</li>
             {{-- settings____________________________________________________________________________ --}}
-            <li class="{{ setActive(['admin.settings.*']) }}"><a href="{{ route('admin.settings.index') }}"
-                    class="nav-link "><i class="fas fa-wrench"></i><span>إعدادات الموقع</span></a></li>
-
-            {{-- <li class="{{ setActive(['admin.sub-category.*']) }}"><a href="{{ route('admin.sub-category.index') }}"
-                        class="nav-link "><i class="fas fa-cog"></i><span>SubCategories</span></a></li> --}}
+            <li class="{{ setActive(['admin.rating.*']) }}"><a href="{{ route('admin.rating.index') }}"
+                    class="nav-link "><i class="fas fa-wrench"></i><span>{{ __('Ratings') }}</span></a></li>
 
             {{-- ___________________________setting__________________________________________________ --}}
-            <li class="menu-header" style="color: black"> </i>الأشخاص</li>
+            <li class="menu-header" style="color: black"> </i>{{ 'Persons' }}</li>
 
             <li class="{{ setActive(['admin.teacher.*']) }}"><a href="{{ route('admin.teacher.index') }}"
                     class="nav-link "><i class="fas fa-cog"></i><span>{{ __('Teachers') }}</span></a></li>
@@ -26,35 +23,40 @@
                     class="nav-link "><i class="fas fa-pen-fancy"></i><span>{{ __('Students') }}</span></a></li>
 
             {{-- ___________________________setting__________________________________________________ --}}
-            <li class="menu-header" style="color: black"> </i>المواد التعلمية</li>
-
-            <li class="{{ setActive(['admin.study-year.*']) }}"><a href="{{ route('admin.study-year.index') }}"
-                    class="nav-link "><i class="fas fa-pen-fancy"></i><span>{{ __('Study years') }}</span></a>
-            </li>
+            <li class="menu-header" style="color: black"> </i>{{ __('Materials') }}</li>
 
             <li class="{{ setActive(['admin.track.*']) }}"><a href="{{ route('admin.track.index') }}"
                     class="nav-link "><i class="fas fa-pen-fancy"></i><span>{{ __('Education tracks') }}</span></a>
+            </li>
+
+            <li class="{{ setActive(['admin.class.*']) }}"><a href="{{ route('admin.class.index') }}"
+                    class="nav-link "><i class="fas fa-pen-fancy"></i><span>{{ __('Classes') }}</span></a>
+            </li>
+
+            <li class="{{ setActive(['admin.class-room.*']) }}"><a href="{{ route('admin.class-room.index') }}"
+                    class="nav-link "><i class="fas fa-pen-fancy"></i><span>{{ __('Class rooms') }}</span></a>
             </li>
 
             <li class="{{ setActive(['admin.material.*']) }}"><a href="{{ route('admin.material.index') }}"
                     class="nav-link "><i class="fas fa-pen-fancy"></i><span>{{ __('Materials') }}</span></a>
             </li>
 
-            {{-- <li class="{{ setActive(['admin.show-designs.*', 'admin.design.*']) }}"><a
-                    href="{{ route('admin.show-designs.index') }}" class="nav-link "><i
-                        class="fas fa-pen-fancy"></i><span>الصفوف</span></a></li>
+            <li class="{{ setActive(['admin.lesson.*']) }}"><a href="{{ route('admin.lesson.index') }}"
+                    class="nav-link "><i class="fas fa-pen-fancy"></i><span>{{ __('Lessons') }}</span></a></li>
 
-            <li class="{{ setActive(['admin.show-designs.*', 'admin.design.*']) }}"><a
-                    href="{{ route('admin.show-designs.index') }}" class="nav-link "><i
-                        class="fas fa-pen-fancy"></i><span>المواد التعلمية</span></a></li>
-
-            <li class="{{ setActive(['admin.show-designs.*', 'admin.design.*']) }}"><a
-                    href="{{ route('admin.show-designs.index') }}" class="nav-link "><i
-                        class="fas fa-pen-fancy"></i><span>الحصص</span></a></li> --}}
             {{-- ___________________________setting__________________________________________________ --}}
-            <li class="menu-header" style="color: black"> </i>التواصل الاجتماعي</li>
+            <li class="menu-header" style="color: black"> </i>{{ __('Social media') }}</li>
             <li class="{{ setActive(['admin.socials.*']) }}"><a href="{{ route('admin.socials.index') }}"
-                    class="nav-link "><i class="fab fa-facebook-square"></i><span>مواقع التواصل</span></a></li>
+                    class="nav-link "><i class="fab fa-facebook-square">{{ __('Social media') }}</i><span></span></a>
+            </li>
+
+
+            {{-- ___________________________setting__________________________________________________ --}}
+            <li class="menu-header" style="color: black"> </i>{{ __('Settings') }}</li>
+            {{-- settings____________________________________________________________________________ --}}
+            <li class="{{ setActive(['admin.settings.*']) }}"><a href="{{ route('admin.settings.index') }}"
+                    class="nav-link "><i class="fas fa-wrench"></i><span>{{ __('Website settings') }}</span></a></li>
+
         </ul>
 
         <br>

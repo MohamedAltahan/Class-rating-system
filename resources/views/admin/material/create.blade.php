@@ -3,7 +3,7 @@
 @section('content')
 
     <div class="card-header">
-        <h4>{{ __('All materials') }}</h4>
+        <h4>{{ __('Create material') }}</h4>
         <div class="card-header-action">
         </div>
     </div>
@@ -14,6 +14,19 @@
 
             <div class="form-group">
                 <x-form.input name="name" label="Material name" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label for="">{{ __('Track') }}</label>
+                <select name="track_id" class="form-control">
+                    @if (isset($tracks))
+                        @foreach ($tracks as $track)
+                            <option value="{{ $track->id }}">{{ __($track->name) }}</option>
+                        @endforeach
+                    @else
+                        <option value="">{{ __('No value') }}</option>
+                    @endif
+                </select>
             </div>
 
             <div class="form-group">

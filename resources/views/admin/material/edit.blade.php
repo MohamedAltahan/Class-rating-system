@@ -18,6 +18,18 @@
                 <x-form.input name="name" label="Material name" class="form-control" value="{{ $material->name }}" />
             </div>
 
+            <div class="form-group">
+                <label for="">{{ __('Track') }}</label>
+                <select name="track_id" class="form-control">
+                    @if (isset($tracks))
+                        @foreach ($tracks as $track)
+                            <option value="{{ $track->id }}">{{ __($track->name) }}</option>
+                        @endforeach
+                    @else
+                        <option value="">{{ __('No value') }}</option>
+                    @endif
+                </select>
+            </div>
 
             <div class="form-group">
                 <label for="">{{ __('Status') }}</label>

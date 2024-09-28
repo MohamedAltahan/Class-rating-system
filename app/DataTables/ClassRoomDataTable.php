@@ -2,7 +2,7 @@
 
 namespace App\DataTables;
 
-use App\Models\Material;
+use App\Models\ClassRoom;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -12,9 +12,10 @@ use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class MaterialDataTable extends DataTable
+class ClassRoomDataTable extends DataTable
 {
     protected $counter = 1;
+
     /**
      * Build the DataTable class.
      *
@@ -24,11 +25,10 @@ class MaterialDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->addColumn(__('action'), function ($query) {
-                $editBtn = "<a href='" . route('admin.material.edit', $query->id)  . "'class='btn btn-sm btn-primary'><i class='far fa-edit'></i>" . __('Edit') . "</a>";
-                $deleteBtn = "<a href='" . route('admin.material.destroy', $query->id)  . "'class='btn btn-sm ml-1 my-1 btn-danger delete-item'><i class='fas fa-trash'></i>" . __('Delete') . "</a>";
+                $editBtn = "<a href='" . route('admin.class-room.edit', $query->id)  . "'class='btn btn-sm btn-primary'><i class='far fa-edit'></i>" . __('Edit') . "</a>";
+                $deleteBtn = "<a href='" . route('admin.class-room.destroy', $query->id)  . "'class='btn btn-sm ml-1 my-1 btn-danger delete-item'><i class='fas fa-trash'></i>" . __('Delete') . "</a>";
                 return $editBtn . $deleteBtn;
             })
-
             ->addColumn(__('status'), function ($query) {
                 if ($query->status == 'active') {
                     $button = '<label class="custom-switch mt-2">
@@ -44,10 +44,6 @@ class MaterialDataTable extends DataTable
 
                 return $button;
             })
-            ->addColumn(__('Track name'), function ($query) {
-
-                return $query->track->name;
-            })
             ->addColumn(__('id'), function ($query) {
                 return $this->counter++;
             })
@@ -58,7 +54,7 @@ class MaterialDataTable extends DataTable
     /**
      * Get the query source of dataTable.
      */
-    public function query(Material $model): QueryBuilder
+    public function query(ClassRoom $model): QueryBuilder
     {
         return $model->newQuery();
     }
@@ -69,7 +65,7 @@ class MaterialDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-            ->setTableId('material-table')
+            ->setTableId('classroom-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
             //->dom('Bfrtip')
@@ -93,7 +89,6 @@ class MaterialDataTable extends DataTable
         return [
             Column::make(__('id')),
             Column::make('name'),
-            Column::make(__('Track name')),
             Column::make(__('status'))->width(60),
             Column::computed(__('action'))
                 ->exportable(false)
@@ -108,6 +103,6 @@ class MaterialDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'Material_' . date('YmdHis');
+        return 'ClassRoom_' . date('YmdHis');
     }
 }
