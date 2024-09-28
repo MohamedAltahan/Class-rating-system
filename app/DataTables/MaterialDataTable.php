@@ -51,8 +51,7 @@ class MaterialDataTable extends DataTable
             ->addColumn(__('id'), function ($query) {
                 return $this->counter++;
             })
-            ->rawColumns([__('action'), __('status')])
-        ;
+            ->rawColumns([__('action'), __('status')]);
     }
 
     /**

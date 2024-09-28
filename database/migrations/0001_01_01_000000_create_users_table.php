@@ -22,13 +22,13 @@ return new class extends Migration
             $table->enum('status', ['active', 'inactive']);
             $table->enum('role', ['student', 'teacher', 'admin'])->default('student');
             $table->string('studing_status')->nullable();
-            $table->string('class_id')->nullable();
+            $table->string('class_id');
             $table->string('birth_palce')->nullable();
             $table->string('birth_date')->nullable();
             $table->string('nationality')->nullable();
             $table->string('residence_number')->nullable();
             $table->string('residence_date')->nullable();
-            $table->string('class_room_id')->nullable();
+            $table->string('class_room_id');
             $table->string('parent_name')->nullable();
             $table->string('landline_number')->nullable();
             $table->text('address')->nullable();

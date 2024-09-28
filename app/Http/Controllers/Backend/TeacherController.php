@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Backend;
 
 use App\DataTables\TeacherDataTable;
+use App\DataTables\TeacherMaterialsDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\Classes;
 use App\Models\User;
 use App\Models\Design;
+use App\Models\Material;
 use App\Models\SubCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -37,9 +39,9 @@ class TeacherController extends Controller
 
         $request->validate([
             'name' => ['required', 'max:200'],
-            'description' => ['sometimes', 'string', 'max:2000'],
-            'status' => ['required'],
-            'phone' => ['sometimes', 'string', 'max:20'],
+            'description' => ['sometimes', 'nullable', 'string', 'max:2000'],
+            'status' => ['required', 'in:active,inactive'],
+            'phone' => ['sometimes', 'string', 'nullable', 'max:20'],
         ]);
 
         $slug = Str::slug($request->name);
@@ -50,7 +52,7 @@ class TeacherController extends Controller
 
         User::create($request->all());
 
-        toastr('Created Successfully');
+        toastr(__('Created Successfully'));
 
         return redirect()->route('admin.teacher.index');
     }
@@ -73,9 +75,9 @@ class TeacherController extends Controller
 
         $request->validate([
             'name' => ['required', 'max:200'],
-            'description' => ['sometimes', 'string', 'max:2000'],
+            'description' => ['sometimes', 'nullable', 'string', 'max:2000'],
             'status' => ['required', 'in:active,inactive'],
-            'phone' => ['sometimes', 'string', 'max:20'],
+            'phone' => ['sometimes', 'string', 'nullable', 'max:20'],
         ]);
 
         $teacher = User::findOrFail($id);
@@ -121,4 +123,42 @@ class TeacherController extends Controller
 
         return response(['message' => __('Status has been updated')]);
     }
+
+
+    public function teacherMaterials(TeacherMaterialsDataTable $dataTable, string $teacherId)
+    {
+        $teacher = User::findOrFail($teacherId);
+
+        return $dataTable->with(['teacherId' => $teacher->id])->render('admin.teacher.materials.index', ['teacher' => $teacher]);
+    }
+
+    public function createMaterial()
+    {
+        $teacherId = request()->input('teacherId');
+        $materials = Material::where('status', 'active')->get();
+        return view('admin.teacher.materials.create', compact('teacherId', 'materials'));
+    }
+    public function storeMaterial(Request $request)
+    {
+        $request->validate([
+            'teacher_id' => ['required', 'exists:users,id'],
+            'material_id' => ['required', 'exists:materials,id']
+        ]);
+
+        $teacher = User::findOrFail($request->teacher_id);
+        $teacher->materials()->syncWithoutDetaching($request->material_id);
+
+        toastr(__('Created Successfully'));
+
+        return redirect()->route('admin.teacher.materials', $teacher->id);
+    }
+    public function destroyMaterial(Request $request)
+    {
+        $material = Material::findOrFail($request->materialId);
+        $teacher = User::findOrFail($request->teacherId);
+        $teacher->materials()->detach($material->id);
+        toastr(__('Deleted Successfully'));
+        return response(['status' => 'success', 'message' => __('Deleted Successfully')]);
+    }
+    public function materialChangeStatus() {}
 }

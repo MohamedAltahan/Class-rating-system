@@ -1,12 +1,12 @@
 @extends('admin.layouts.master')
-@section('mainTitle', 'Category')
+@section('mainTitle', __('Students'))
 @section('content')
-    <!-- Main Content -->
+
 
     <div class="card-header">
-        <h4>All categories</h4>
+        <h4>{{ __('All students') }}</h4>
         <div class="card-header-action">
-            <a href="{{ route('admin.category.create') }}" class="btn btn-primary">+ Create New</a>
+            <a href="{{ route('admin.student.create') }}" class="btn btn-primary">{{ __('+ Create new') }}</a>
         </div>
     </div>
     <div class="card-body">
@@ -24,7 +24,7 @@
                     let id = $(this).data('id');
                     $.ajax({
                         method: 'PUT',
-                        url: "{{ route('admin.category.change-status') }}",
+                        url: "{{ route('admin.student.change-status') }}",
                         data: {
                             // status is the name of the value "ischecked" in you php function
                             status: isChecked,

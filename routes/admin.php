@@ -46,6 +46,12 @@ Route::group(
         Route::resource('student', StudentController::class);
 
         //teacher
+
+        Route::delete('teacher-materials/', [TeacherController::class, 'destroyMaterial'])->name('teacher.materials.destroy');
+        Route::get('teacher-materials/create', [TeacherController::class, 'createMaterial'])->name('teacher.materials.create');
+        Route::post('teacher-materials/store', [TeacherController::class, 'storeMaterial'])->name('teacher.materials.store');
+        Route::get('teacher-materials/{teacherId}', [TeacherController::class, 'teacherMaterials'])->name('teacher.materials');
+
         Route::put('teacher/change-status', [TeacherController::class, 'changeStatus'])->name('teacher.change-status');
         Route::resource('teacher', TeacherController::class);
 

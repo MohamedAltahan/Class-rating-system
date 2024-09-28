@@ -2,18 +2,21 @@
 
 namespace App\DataTables;
 
+use App\Models\Material;
+use App\Models\TeacherMaterial;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
+use Yajra\DataTables\Html\Editor\Editor;
+use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class TeacherDataTable extends DataTable
+class TeacherMaterialsDataTable extends DataTable
 {
-    public $counter = 1;
-
+    protected $counter = 1;
     /**
      * Build the DataTable class.
      *
@@ -22,11 +25,13 @@ class TeacherDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn(__('action'), function ($query) {
-                $materialBtn = "<a href='" . route('admin.teacher.materials', $query->id)  . "'class='btn btn-sm mx-1 my-1 btn-warning'><i class='far fa-edit'></i>" . __('Materials') . "</a>";
-                $editBtn = "<a href='" . route('admin.teacher.edit', $query->id)  . "'class='btn btn-sm btn-primary'><i class='far fa-edit'></i>" . __('Edit') . "</a>";
-                $deleteBtn = "<a href='" . route('admin.teacher.destroy', $query->id)  . "'class='btn btn-sm ml-1 my-1 btn-danger delete-item'><i class='fas fa-trash'></i>" . __('Delete') . "</a>";
-                return $materialBtn . $editBtn . $deleteBtn;
+
+            ->addColumn('name', function ($query) {
+                return  $query->name;
+            })
+            ->addColumn('action', function ($query) {
+                $deleteBtn = "<a href='" . route('admin.teacher.materials.destroy', ['materialId' => $query->id, 'teacherId' => $this->teacherId])  . "'class='btn btn-sm ml-1 my-1 btn-danger delete-item'><i class='fas fa-trash'></i>" . __('Delete') . "</a>";
+                return  $deleteBtn;
             })
 
             ->addColumn(__('status'), function ($query) {
@@ -44,22 +49,24 @@ class TeacherDataTable extends DataTable
 
                 return $button;
             })
-            ->addColumn('information', function ($query) {
-                return $query->description;
-            })
-            ->addColumn(__('id'), function ($query) {
+
+            ->addColumn('id', function ($query) {
                 return $this->counter++;
             })
-            ->rawColumns([__('action'), __('status')])
+            ->rawColumns(['action', 'status'])
         ;
     }
 
     /**
      * Get the query source of dataTable.
      */
-    public function query(User $model): QueryBuilder
+    public function query(Material $model)
     {
-        return $model->where('role', 'teacher')->newQuery();
+        // dd($model->where('id', $this->teacherId)->newQuery()->with('materials'));
+        return $model->newQuery()
+            ->select('materials.*')
+            ->join('material_teacher', 'materials.id', '=', 'material_teacher.material_id')
+            ->where('material_teacher.teacher_id', $this->teacherId);
     }
 
     /**
@@ -68,12 +75,11 @@ class TeacherDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-            ->setTableId('teacher-table')
+            ->setTableId('teachermaterials-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
             //->dom('Bfrtip')
-            //first column is 0 second is 1,....
-            ->orderBy(0)
+            ->orderBy(1)
             ->selectStyleSingle()
             ->buttons([
                 Button::make('excel'),
@@ -91,16 +97,14 @@ class TeacherDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-
-            Column::make(__('id')),
+            Column::make('id'),
             Column::make('name'),
-            Column::make('description'),
-            Column::make(__('status'))->width(60),
-            Column::computed(__('action'))
+            Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
-                ->width(230)
+                ->width(150)
                 ->addClass('text-center'),
+
         ];
     }
 
@@ -109,6 +113,6 @@ class TeacherDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'Teacher_' . date('YmdHis');
+        return 'TeacherMaterials_' . date('YmdHis');
     }
 }

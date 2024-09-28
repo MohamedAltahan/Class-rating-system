@@ -139,6 +139,7 @@
                         confirmButtonText: "Yes, delete it!"
                     }).then((result) => {
                         if (result.isConfirmed) {
+
                             $.ajax({
                                 type: 'DELETE',
                                 url: deleteUrl,

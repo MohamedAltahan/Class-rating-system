@@ -8,7 +8,7 @@
         </div>
     </div>
     <div class="card-body">
-        <form action="{{ route('admin.teacher.update', $teacher->id) }}" method="POST">
+        <form action="{{ route('admin.teacher.materials.update', $material->id) }}" method="POST">
             @csrf
             @method('PUT')
             @include('admin.teacher._form', ['buttonLabel' => 'Update'])

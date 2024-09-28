@@ -26,7 +26,7 @@ class User extends Authenticatable
         'status',
         'role',
         'studing_status',
-        'birth_palce',
+        'birth_place',
         'birth_date',
         'nationality',
         'residence_number',
@@ -39,7 +39,8 @@ class User extends Authenticatable
         'email_verified_at',
         'password',
         'track_id',
-        'class_room_id'
+        'class_room_id',
+        'class_id'
     ];
 
     /**
@@ -60,4 +61,24 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function track()
+    {
+        return $this->belongsTo(Track::class);
+    }
+
+    public function classRoom()
+    {
+        return $this->belongsTo(ClassRoom::class);
+    }
+
+    public function class()
+    {
+        return $this->belongsTo(Classes::class);
+    }
+
+    public function materials()
+    {
+        return $this->belongsToMany(Material::class, 'material_teacher', 'teacher_id', 'material_id', 'id', 'id');
+    }
 }
