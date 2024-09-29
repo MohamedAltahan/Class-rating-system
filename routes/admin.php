@@ -42,14 +42,18 @@ Route::group(
         Route::put('general-settnig-update', [SettingController::class, 'generalSettingUpdate'])->name('general-setting-update.index');
 
         //student
+        Route::get('student-materials/create', [StudentController::class, 'createMaterial'])->name('student.materials.create');
+        Route::post('student-materials/store', [StudentController::class, 'storeMaterial'])->name('student.materials.store');
+        Route::get('student-materials/{studentId}', [StudentController::class, 'studentMaterials'])->name('student.materials');
+        Route::delete('student-materials/', [StudentController::class, 'destroyMaterial'])->name('student.materials.destroy');
+
         Route::put('student/change-status', [StudentController::class, 'changeStatus'])->name('student.change-status');
         Route::resource('student', StudentController::class);
 
         //teacher
-
-        Route::delete('teacher-materials/', [TeacherController::class, 'destroyMaterial'])->name('teacher.materials.destroy');
         Route::get('teacher-materials/create', [TeacherController::class, 'createMaterial'])->name('teacher.materials.create');
         Route::post('teacher-materials/store', [TeacherController::class, 'storeMaterial'])->name('teacher.materials.store');
+        Route::delete('teacher-materials/', [TeacherController::class, 'destroyMaterial'])->name('teacher.materials.destroy');
         Route::get('teacher-materials/{teacherId}', [TeacherController::class, 'teacherMaterials'])->name('teacher.materials');
 
         Route::put('teacher/change-status', [TeacherController::class, 'changeStatus'])->name('teacher.change-status');

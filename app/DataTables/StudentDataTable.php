@@ -24,9 +24,10 @@ class StudentDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->addColumn(__('action'), function ($query) {
+                $materialBtn = "<a href='" . route('admin.student.materials', $query->id)  . "'class='btn btn-sm mx-1 my-1 btn-warning'><i class='far fa-edit'></i>" . __('Materials') . "</a>";
                 $editBtn = "<a href='" . route('admin.student.edit', $query->id)  . "'class='btn btn-sm btn-primary'><i class='far fa-edit'></i>" . __('Edit') . "</a>";
                 $deleteBtn = "<a href='" . route('admin.student.destroy', $query->id)  . "'class='btn btn-sm ml-1 my-1 btn-danger delete-item'><i class='fas fa-trash'></i>" . __('Delete') . "</a>";
-                return $editBtn . $deleteBtn;
+                return $materialBtn . $editBtn . $deleteBtn;
             })
 
             ->addColumn(__('status'), function ($query) {
@@ -105,7 +106,7 @@ class StudentDataTable extends DataTable
             Column::computed(__('action'))
                 ->exportable(false)
                 ->printable(false)
-                ->width(120)
+                ->width(220)
                 ->addClass('text-center'),
 
 

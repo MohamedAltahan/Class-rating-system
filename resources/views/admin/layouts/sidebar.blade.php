@@ -47,8 +47,7 @@
             {{-- ___________________________setting__________________________________________________ --}}
             <li class="menu-header" style="color: black"> </i>{{ __('Social media') }}</li>
             <li class="{{ setActive(['admin.socials.*']) }}"><a href="{{ route('admin.socials.index') }}"
-                    class="nav-link "><i class="fab fa-facebook-square">{{ __('Social media') }}</i><span></span></a>
-            </li>
+                    class="nav-link "><i class="fab fa-facebook-square"></i>{{ __('Social media') }}</a></li>
 
 
             {{-- ___________________________setting__________________________________________________ --}}

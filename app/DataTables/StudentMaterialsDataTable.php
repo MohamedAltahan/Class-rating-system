@@ -3,8 +3,7 @@
 namespace App\DataTables;
 
 use App\Models\Material;
-use App\Models\TeacherMaterial;
-use App\Models\User;
+use App\Models\StudentMaterial;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -14,7 +13,7 @@ use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class TeacherMaterialsDataTable extends DataTable
+class StudentMaterialsDataTable extends DataTable
 {
     protected $counter = 1;
     /**
@@ -25,12 +24,11 @@ class TeacherMaterialsDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-
             ->addColumn('name', function ($query) {
                 return  $query->name;
             })
             ->addColumn('action', function ($query) {
-                $deleteBtn = "<a href='" . route('admin.teacher.materials.destroy', ['materialId' => $query->id, 'teacherId' => $this->teacherId])  . "'class='btn btn-sm ml-1 my-1 btn-danger delete-item'><i class='fas fa-trash'></i>" . __('Delete') . "</a>";
+                $deleteBtn = "<a href='" . route('admin.student.materials.destroy', ['materialId' => $query->id, 'studentId' => $this->studentId])  . "'class='btn btn-sm ml-1 my-1 btn-danger delete-item'><i class='fas fa-trash'></i>" . __('Delete') . "</a>";
                 return  $deleteBtn;
             })
 
@@ -59,12 +57,12 @@ class TeacherMaterialsDataTable extends DataTable
     /**
      * Get the query source of dataTable.
      */
-    public function query(Material $model)
+    public function query(Material $model): QueryBuilder
     {
         return $model->newQuery()
             ->select('materials.*')
-            ->join('material_teacher', 'materials.id', '=', 'material_teacher.material_id')
-            ->where('material_teacher.teacher_id', $this->teacherId);
+            ->join('material_student', 'materials.id', '=', 'material_student.material_id')
+            ->where('material_student.student_id', $this->studentId);
     }
 
     /**
@@ -73,7 +71,7 @@ class TeacherMaterialsDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-            ->setTableId('teachermaterials-table')
+            ->setTableId('studentmaterials-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
             //->dom('Bfrtip')
@@ -102,7 +100,6 @@ class TeacherMaterialsDataTable extends DataTable
                 ->printable(false)
                 ->width(150)
                 ->addClass('text-center'),
-
         ];
     }
 
@@ -111,6 +108,6 @@ class TeacherMaterialsDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'TeacherMaterials_' . date('YmdHis');
+        return 'StudentMaterials_' . date('YmdHis');
     }
 }

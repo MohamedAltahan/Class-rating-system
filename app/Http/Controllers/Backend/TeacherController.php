@@ -152,6 +152,7 @@ class TeacherController extends Controller
 
         return redirect()->route('admin.teacher.materials', $teacher->id);
     }
+
     public function destroyMaterial(Request $request)
     {
         $material = Material::findOrFail($request->materialId);
@@ -160,5 +161,4 @@ class TeacherController extends Controller
         toastr(__('Deleted Successfully'));
         return response(['status' => 'success', 'message' => __('Deleted Successfully')]);
     }
-    public function materialChangeStatus() {}
 }

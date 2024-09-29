@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Backend;
 
 use App\DataTables\StudentDataTable;
+use App\DataTables\StudentMaterialsDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\Classes;
 use App\Models\ClassRoom;
+use App\Models\Material;
 use App\Models\Track;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -104,6 +106,44 @@ class StudentController extends Controller
     {
         $student = User::find($id);
         $student->delete();
+        toastr(__('Deleted Successfully'));
+        return response(['status' => 'success', 'message' => __('Deleted Successfully')]);
+    }
+
+    public function studentMaterials(StudentMaterialsDataTable $dataTable, string $studentId)
+    {
+        $student = User::findOrFail($studentId);
+
+        return $dataTable->with(['studentId' => $student->id])->render('admin.student.materials.index', ['student' => $student]);
+    }
+
+    public function createMaterial()
+    {
+        $studentId = request()->input('studentId');
+        $materials = Material::where('status', 'active')->get();
+        return view('admin.student.materials.create', compact('studentId', 'materials'));
+    }
+    public function storeMaterial(Request $request)
+    {
+        $request->validate([
+            'student_id' => ['required', 'exists:users,id'],
+            'material_id' => ['required', 'exists:materials,id']
+        ]);
+
+        $teacher = User::findOrFail($request->student_id);
+        $teacher->materials()->syncWithoutDetaching($request->material_id);
+
+        toastr(__('Created Successfully'));
+
+        return redirect()->route('admin.teacher.materials', $teacher->id);
+    }
+
+    public function destroyMaterial(Request $request)
+    {
+        $material = Material::findOrFail($request->materialId);
+        $student = User::findOrFail($request->studentId);
+        $student->materials()->detach($material->id);
+
         toastr(__('Deleted Successfully'));
         return response(['status' => 'success', 'message' => __('Deleted Successfully')]);
     }
