@@ -2,9 +2,11 @@
 
 namespace App\DataTables;
 
+use App\Models\Lesson;
 use App\Models\Material;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
-use Illuminate\Support\Facades\Route;
+use Illuminate\Routing\Route;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\Html\Button;
@@ -13,7 +15,7 @@ use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class MaterialDataTable extends DataTable
+class LessonDataTable extends DataTable
 {
     protected $counter = 1;
     /**
@@ -25,17 +27,11 @@ class MaterialDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->addColumn(__('action'), function ($query) {
-                $addLessonBtn = "<a href='" . route('admin.lesson.create', ['materialId' => $query->id, 'trackId' => $query->track->id])  . "'class='btn btn-sm mx-1 my-1 btn-warning'><i class='far fa-edit'></i>" . __('Add lesson') . "</a>";
-                if (Route::currentRouteName() != 'admin.lesson.index') {
-                    $editBtn = "<a href='" . route('admin.material.edit', $query->id)  . "'class='btn btn-sm btn-primary'><i class='far fa-edit'></i>" . __('Edit') . "</a>";
-                    $deleteBtn = "<a href='" . route('admin.material.destroy', $query->id)  . "'class='btn btn-sm ml-1 my-1 btn-danger delete-item'><i class='fas fa-trash'></i>" . __('Delete') . "</a>";
-                } else {
-                    $viewLessons = "<a href='" . route('admin.lesson.show', $query->id)  . "'class='btn btn-sm ml-1 my-1 btn-info'><i class='far fa-edit'></i>" . __('View lessons') . "</a>";
-                }
-                return $addLessonBtn . @$editBtn . @$deleteBtn . @$viewLessons;
+                $editBtn = "<a href='" . route('admin.material.edit', $query->id)  . "'class='btn btn-sm btn-primary'><i class='far fa-edit'></i>" . __('Edit') . "</a>";
+                $deleteBtn = "<a href='" . route('admin.material.destroy', $query->id)  . "'class='btn btn-sm ml-1 my-1 btn-danger delete-item'><i class='fas fa-trash'></i>" . __('Delete') . "</a>";
+                return @$editBtn . @$deleteBtn;
             })
-
-            ->addColumn(__('status'), function ($query) {
+            ->addColumn(__('Status'), function ($query) {
                 if ($query->status == 'active') {
                     $button = '<label class="custom-switch mt-2">
                         <input checked type="checkbox" name="custom-switch-checkbox" data-id="' . $query->id . '" class="change-status custom-switch-input">
@@ -50,9 +46,8 @@ class MaterialDataTable extends DataTable
 
                 return $button;
             })
-            ->addColumn(__('Track name'), function ($query) {
-
-                return $query->track->name;
+            ->addColumn(__('Date'), function ($query) {
+                return Carbon::parse($query->date_time)->format('Y-m-d H:i');
             })
             ->addColumn(__('id'), function ($query) {
                 return $this->counter++;
@@ -63,9 +58,9 @@ class MaterialDataTable extends DataTable
     /**
      * Get the query source of dataTable.
      */
-    public function query(Material $model): QueryBuilder
+    public function query(lesson $model): QueryBuilder
     {
-        return $model->newQuery();
+        return $model->where('material_id', $this->materialId)->newQuery();
     }
 
     /**
@@ -74,7 +69,7 @@ class MaterialDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-            ->setTableId('material-table')
+            ->setTableId('lesson-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
             //->dom('Bfrtip')
@@ -98,13 +93,14 @@ class MaterialDataTable extends DataTable
         return [
             Column::make(__('id')),
             Column::make('name'),
-            Column::make(__('Track name')),
-            Column::make(__('status'))->width(60),
+            Column::make(__('Date')),
+            Column::make(__('Status')),
             Column::computed(__('action'))
                 ->exportable(false)
                 ->printable(false)
-                ->width(240)
+                ->width(150)
                 ->addClass('text-center'),
+
         ];
     }
 
@@ -113,6 +109,6 @@ class MaterialDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'Material_' . date('YmdHis');
+        return 'Lesson_' . date('YmdHis');
     }
 }

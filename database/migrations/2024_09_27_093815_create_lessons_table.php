@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->foreignId('material_id')->constrained('materials')->onDelete('restrict');
             $table->foreignId('teacher_id')->constrained('users')->onDelete('restrict');
+            $table->foreignId('track_id')->constrained('tracks')->onDelete('restrict');
             $table->dateTime('date_time');
             $table->enum('status', ['active', 'inactive']);
             $table->timestamps();

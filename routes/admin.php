@@ -75,7 +75,7 @@ Route::group(
         Route::put('material/change-status', [MaterialController::class, 'changeStatus'])->name('material.change-status');
         Route::resource('material', MaterialController::class);
 
-        //Materials
+        //lessons
         Route::put('lesson/change-status', [LessonController::class, 'changeStatus'])->name('lesson.change-status');
         Route::resource('lesson', LessonController::class);
 

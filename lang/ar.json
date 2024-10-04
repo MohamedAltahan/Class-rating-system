@@ -23,6 +23,7 @@
     "Main logo": "لوجو الموقع",
     "About you": "من نحن",
     "id": "م",
+    "All materials' ratings": "",
     "Student materials": "",
     "status": "حالة التفعيل",
     "Status": "حالة التفعيل",
@@ -32,7 +33,7 @@
     "All teacher": "المعلمون",
     "+ Create new": "+ إضافة جديد",
     "Teachers": "المعلمون",
-    "Teacher": "المعلمون",
+    "Teacher": "المعلم",
     "Create teacher": "",
     "Active": "",
     "Inactive": "",
@@ -86,5 +87,10 @@
     "All materials": "",
     "All study years": "",
     "Created Successfully": "",
-    "Student name": ""
+    "Student name": "",
+    "Add lesson": "",
+    "All lessons for": "كل الحصص الخاصة بـ",
+    "Lesson name": "",
+    "+ Create lesson": "إضافة حصة +",
+    "No teachers please add": ""
 }

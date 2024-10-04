@@ -3,43 +3,66 @@
 namespace App\Http\Controllers\Backend;
 
 use App\DataTables\ClassesDataTable;
+use App\DataTables\LessonDataTable;
+use App\DataTables\MaterialDataTable;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Classes;
+use App\Models\Lesson;
+use App\Models\Material;
+use App\Models\User;
+use Illuminate\Support\Carbon;
 
 class LessonController extends Controller
 {
 
 
-    public function index(ClassesDataTable $dataTable)
+    public function index(MaterialDataTable $dataTable)
     {
-        return $dataTable->render('admin.class.index');
+        return $dataTable->render('admin.material.lesson.index');
     }
 
-    public function create()
+    public function create(Request $request)
     {
-        return view('admin.class.create');
+        $materialId = $request->materialId;
+        $trackId = $request->trackId;
+        $teachers = Material::where('status', 'active')
+            ->findOrFail($materialId)->teachers;
+
+        return view('admin.material.lesson.create', compact('teachers', 'materialId', 'trackId'));
     }
 
     public function store(Request $request)
     {
         $data =  $request->validate([
-            'name' => ['string', 'max:150'],
+            'name' => ['required', 'string', 'max:150'],
+            'material_id' => ['required', 'exists:materials,id'],
+            'teacher_id' => ['sometimes', 'nullable', 'exists:users,id'],
+            'track_id' => ['required', 'exists:tracks,id'],
+            'date_time' => ['date'],
             'status' => ['in:active,inactive']
         ]);
 
-        classes::create($data);
+        Lesson::create($data);
 
         toastr(__('Created Successfully'));
 
-        return redirect()->route('admin.class.index');
+        return redirect()->route('admin.lesson.index');
     }
 
     public function edit($id)
     {
-        $class = classes::findOrFail($id);
+        $lesson = Lesson::findOrFail($id);
 
-        return view('admin.class.edit', compact('class'));
+        return view('admin.material.lesson.edit', compact('class'));
+    }
+
+    public function show(LessonDataTable $dataTable, $materialId)
+    {
+        $material = Material::with('track')->findOrFail($materialId);
+
+        return $dataTable->with(['materialId' => $materialId])
+            ->render('admin.material.lesson.show', ['material' => $material]);
     }
 
     public function update(Request $request, string $id)

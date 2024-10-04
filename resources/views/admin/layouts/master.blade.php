@@ -17,6 +17,7 @@
         <link rel="stylesheet" href="{{ asset('backend/assets/modules/weather-icon/css/weather-icons-wind.min.css') }}">
         <link rel="stylesheet" href="{{ asset('backend/assets/modules/summernote/summernote-bs4.css') }}">
 
+
         <!-- Template CSS -->
         <link rel="stylesheet" href="{{ asset('backend/assets/css/style.css') }}">
         <link rel="stylesheet" href="{{ asset('backend/assets/css/components.css') }}">
@@ -29,6 +30,12 @@
         {{-- @if ($setting->layout == 'rtl')
             <link rel="stylesheet" href="{{ asset('backend/assets/css/skins/rtl.css') }}">
         @endif --}}
+
+        {{-- <link rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" /> --}}
+
+        <link rel="stylesheet" href="{{ asset('backend/assets/css/bootstrap-datetimepicker.min.css') }}" />
+
 
         @stack('styles')
         <!-- Start GA -->
@@ -117,6 +124,16 @@
         <script src="{{ asset('backend/assets/js/jquery.dataTables.min.js') }}"></script>
         <script src="{{ asset('backend/assets/js/dataTables.bootstrap5.min.js') }}"></script>
 
+
+
+        {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> --}}
+
+        {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.min.js"></script> --}}
+
+        <script src="{{ asset('backend/assets/js/bootstrap-hijri-datepicker.min.js') }}"></script>
+
+
+
         {{-- dynamic delete alert from sweet alert --}}
         <script>
             $(document).ready(function() {
@@ -167,6 +184,8 @@
                 })
             });
         </script>
+
+
         <script>
             // loop on laravel errors
             @if ($errors->any())

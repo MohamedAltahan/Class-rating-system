@@ -19,4 +19,14 @@ class Material extends Model
     {
         return $this->belongsTo(track::class);
     }
+
+    public function lessons()
+    {
+        return $this->hasMany(Lesson::class);
+    }
+
+    public function teachers()
+    {
+        return $this->belongsToMany(User::class, 'material_teacher', 'material_id', 'teacher_id')->where('role', 'teacher');
+    }
 }
