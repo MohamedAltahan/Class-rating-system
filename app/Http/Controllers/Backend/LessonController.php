@@ -50,13 +50,6 @@ class LessonController extends Controller
         return redirect()->route('admin.lesson.index');
     }
 
-    public function edit($id)
-    {
-        $lesson = Lesson::findOrFail($id);
-
-        return view('admin.material.lesson.edit', compact('class'));
-    }
-
     public function show(LessonDataTable $dataTable, $materialId)
     {
         $material = Material::with('track')->findOrFail($materialId);
@@ -65,13 +58,27 @@ class LessonController extends Controller
             ->render('admin.material.lesson.show', ['material' => $material]);
     }
 
+    public function edit($id)
+    {
+        $lesson = Lesson::findOrFail($id);
+
+        $teachers = Material::where('status', 'active')
+            ->findOrFail($lesson->material->id)->teachers;
+
+        return view('admin.material.lesson.edit', compact('lesson', 'teachers'));
+    }
+
     public function update(Request $request, string $id)
     {
-        $class = classes::findOrFail($id);
+        $class = Lesson::findOrFail($id);
 
         $data = $request->validate([
-            'name' => 'required|string|max:100',
-            'status' => 'required|in:active,inactive'
+            'name' => ['required', 'string', 'max:150'],
+            'material_id' => ['required', 'exists:materials,id'],
+            'teacher_id' => ['sometimes', 'nullable', 'exists:users,id'],
+            'track_id' => ['required', 'exists:tracks,id'],
+            'date_time' => ['date'],
+            'status' => ['in:active,inactive']
         ]);
         $class->update($data);
 
@@ -80,12 +87,23 @@ class LessonController extends Controller
         return redirect()->route('admin.class.index');
     }
 
+    public function destroy(string $id)
+    {
+        $lesson = Lesson::findOrFail($id);
+
+        $lesson->delete();
+
+        toastr(__('Deleted Successfully'));
+
+        return response(['status' => 'success', 'message' => __('Deleted Successfully')]);
+    }
+
     public function changeStatus(Request $request)
     {
-        $class = Classes::findOrFail($request->id);
+        $lesson = Lesson::findOrFail($request->id);
 
-        $request->status == "true" ? $class->status = 'active' : $class->status = 'inactive';
-        $class->save();
+        $request->status == "true" ? $lesson->status = 'active' : $lesson->status = 'inactive';
+        $lesson->save();
 
         return response(['message' => __('Status has been updated')]);
     }

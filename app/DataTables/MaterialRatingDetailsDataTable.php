@@ -4,9 +4,8 @@ namespace App\DataTables;
 
 use App\Models\Lesson;
 use App\Models\Material;
-use Carbon\Carbon;
+use App\Models\MaterialRatingDetail;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
-use Illuminate\Routing\Route;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\Html\Button;
@@ -15,7 +14,7 @@ use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class LessonDataTable extends DataTable
+class MaterialRatingDetailsDataTable extends DataTable
 {
     protected $counter = 1;
     /**
@@ -26,41 +25,44 @@ class LessonDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
+            ->addColumn(__('Lesson_name'), function ($query) {
+                return $query->name;
+            })
             ->addColumn(__('action'), function ($query) {
-                $editBtn = "<a href='" . route('admin.lesson.edit', $query->id)  . "'class='btn btn-sm btn-primary'><i class='far fa-edit'></i>" . __('Edit') . "</a>";
-                $deleteBtn = "<a href='" . route('admin.lesson.destroy', $query->id)  . "'class='btn btn-sm ml-1 my-1 btn-danger delete-item'><i class='fas fa-trash'></i>" . __('Delete') . "</a>";
-                return @$editBtn . @$deleteBtn;
+                $viewBtn = "<a href='" . route('admin.rating.lesson.details', $query->id) . "'class='btn btn-sm mx-1 my-1 btn-warning'><i class='far fa-edit'></i>" . __('View details') . "</a>";
+                return $viewBtn;
             })
-            ->addColumn(__('Status'), function ($query) {
-                if ($query->status == 'active') {
-                    $button = '<label class="custom-switch mt-2">
-                        <input checked type="checkbox" name="custom-switch-checkbox" data-id="' . $query->id . '" class="change-status custom-switch-input">
-                        <span class="custom-switch-indicator"></span>
-                      </label>';
-                } else {
-                    $button = '<label class="custom-switch mt-2">
-                        <input type="checkbox" name="custom-switch-checkbox" data-id="' . $query->id . '" class="change-status custom-switch-input ">
-                        <span class="custom-switch-indicator"></span>
-                      </label>';
-                }
-
-                return $button;
+            ->addColumn(__('Ratings_count'), function ($query) {
+                return $query->ratings_count ?? 0;
             })
-            ->addColumn(__('Date'), function ($query) {
-                return Carbon::parse($query->date_time)->format('Y-m-d H:i');
+            ->addColumn(__('Minimum_rating'), function ($query) {
+                return $query->ratings_min_rating ?? 0;
+            })
+            ->addColumn(__('Average_rating'), function ($query) {
+                return round($query->ratings_avg_rating, 1) ?? 0;
+            })
+            ->addColumn(__('Maximum_rating'), function ($query) {
+                return $query->ratings_max_rating ?? 0;
+            })
+            ->addColumn(__('Count_comments'), function ($query) {
+                return $query->comments_count ?? 0;
             })
             ->addColumn(__('id'), function ($query) {
                 return $this->counter++;
             })
-            ->rawColumns([__('action'), __('status')]);
+            ->rawColumns([__('action')]);
     }
 
     /**
      * Get the query source of dataTable.
      */
-    public function query(lesson $model): QueryBuilder
+    public function query(Lesson $model): QueryBuilder
     {
-        return $model->where('material_id', $this->materialId)->newQuery();
+        return $model->withCount('ratings')
+            ->withCount('comments')
+            ->withAvg('ratings', 'rating')
+            ->withMin('ratings', 'rating')
+            ->withMax('ratings', 'rating')->newQuery();
     }
 
     /**
@@ -69,7 +71,7 @@ class LessonDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-            ->setTableId('lesson-table')
+            ->setTableId('materialratingdetails-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
             //->dom('Bfrtip')
@@ -92,9 +94,12 @@ class LessonDataTable extends DataTable
     {
         return [
             Column::make(__('id')),
-            Column::make('name'),
-            Column::make(__('Date')),
-            Column::make(__('Status')),
+            Column::make(__('Lesson_name')),
+            Column::make(__('Ratings_count')),
+            Column::make(__('Minimum_rating')),
+            Column::make(__('Average_rating')),
+            Column::make(__('Maximum_rating')),
+            Column::make(__('Count_comments')),
             Column::computed(__('action'))
                 ->exportable(false)
                 ->printable(false)
@@ -109,6 +114,6 @@ class LessonDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'Lesson_' . date('YmdHis');
+        return 'MaterialRatingDetails_' . date('YmdHis');
     }
 }

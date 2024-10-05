@@ -3,11 +3,11 @@
 </div>
 
 <div class="form-group">
-    <x-form.input name="material_id" type="hidden" value="{{ $materialId }}" />
+    <x-form.input name="material_id" type="hidden" value="{{ $materialId ?? $lesson->material_id }}" />
 </div>
 
 <div class="form-group">
-    <x-form.input name="track_id" type="hidden" value="{{ $trackId }}" />
+    <x-form.input name="track_id" type="hidden" value="{{ $trackId ?? $lesson->track_id }}" />
 </div>
 
 <div class="form-group">

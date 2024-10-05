@@ -12,7 +12,7 @@
 
             <a href="{{ route('contact.index') }}"
                 class="btn btn_color text-dark py-sm-3 px-sm-5 rounded-pill me-3 mt-4 animated slideInLeft">
-                Contact Us
+                {{ __('Login and start rating') }}
             </a>
 
         </div>

@@ -1,6 +1,6 @@
 <div class="container-xxl position-relative p-0">
     <nav class="navbar navbar_color sticky-top shadow-sm navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0">
-        <a href="{{ url('/') }}" class="navbar-brand p-0">
+        <a href="{{ url('/') }}" class="navbar-brand p-0 mt-2">
             <img class="mb-3" src="{{ asset('uploads/' . $logo->main_logo) }}" alt="Logo">
             <h1 class="m-0 text-warning" style="display: inline-block;font-family: 'Varela Round', sans-serif;">
                 {{ $setting->site_name }}</h1>
@@ -11,14 +11,17 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav mx-auto py-0">
-                <a href="{{ route('about') }}" class="nav-item nav-link text_color {{ setActive(['about']) }}">About</a>
+                <a href="{{ route('about') }}"
+                    class="nav-item nav-link text_color {{ setActive(['about']) }}">{{ __('About us') }}</a>
                 <a href="{{ route('contact.index') }}"
-                    class="nav-item nav-link text_color {{ setActive(['contact.*']) }}">Contact</a>
-                @foreach ($categories as $category)
+                    class="nav-item nav-link text_color {{ setActive(['contact.*']) }}">{{ __('Contact us') }}</a>
+                <a href="{{ route('login') }}"
+                    class="nav-item nav-link text_color {{ setActive(['login.*']) }}">{{ __('Login') }}</a>
+                {{-- @foreach ($categories as $category)
                     <a href="{{ route('category.show', ['id' => $category->id]) }}"
                         class="nav-item nav-link text_color @if (request()->is("category/$category->id")) active @endif ">
                         {{ $category->name }}</a>
-                @endforeach
+                @endforeach --}}
             </div>
 
         </div>

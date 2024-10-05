@@ -25,6 +25,16 @@ class Material extends Model
         return $this->hasMany(Lesson::class);
     }
 
+    public function ratings()
+    {
+        return $this->hasMany(Rating::class);
+    }
+
+    public function comments()
+    {
+        return $this->hasManyThrough(Comment::class, Lesson::class);
+    }
+
     public function teachers()
     {
         return $this->belongsToMany(User::class, 'material_teacher', 'material_id', 'teacher_id')->where('role', 'teacher');

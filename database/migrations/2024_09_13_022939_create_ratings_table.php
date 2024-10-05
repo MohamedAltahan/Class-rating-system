@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('lesson_id')->constrained('lessons')->onDelete('restrict')->onUpdate('cascade');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade'); // Student who rated the class
+            $table->foreignId('material_id')->constrained('material')->onDelete('cascade'); // Student who rated the class
             $table->unsignedTinyInteger('rating')->comment('Rating from 1 to 5');
             $table->timestamps();
         });

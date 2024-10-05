@@ -15,6 +15,7 @@ use Yajra\DataTables\Services\DataTable;
 
 class MaterialRatingDataTable extends DataTable
 {
+    protected $counter = 1;
     /**
      * Build the DataTable class.
      *
@@ -23,10 +24,32 @@ class MaterialRatingDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
+            ->addColumn(__('Material_name'), function ($query) {
+                return $query->name;
+            })
             ->addColumn(__('action'), function ($query) {
-                $viewBtn = "<a href='" . route('admin.student.materials', $query->id)  . "'class='btn btn-sm mx-1 my-1 btn-warning'><i class='far fa-edit'></i>" . __('Materials') . "</a>";
+                $viewBtn = "<a href='" . route('admin.rating.material.materialRatingDetails', $query->id) . "'class='btn btn-sm mx-1 my-1 btn-warning'><i class='far fa-edit'></i>" . __('View ratings') . "</a>";
                 return $viewBtn;
-            });
+            })
+            ->addColumn(__('Ratings_count'), function ($query) {
+                return $query->ratings_count;
+            })
+            ->addColumn(__('Minimum_rating'), function ($query) {
+                return $query->ratings_min_rating;
+            })
+            ->addColumn(__('Average_rating'), function ($query) {
+                return round($query->ratings_avg_rating, 1);
+            })
+            ->addColumn(__('Maximum_rating'), function ($query) {
+                return $query->ratings_max_rating;
+            })
+            ->addColumn(__('Count_comments'), function ($query) {
+                return $query->comments_count ?? 0;
+            })
+            ->addColumn(__('id'), function ($query) {
+                return $this->counter++;
+            })
+            ->rawColumns([__('action')]);
     }
 
     /**
@@ -34,9 +57,12 @@ class MaterialRatingDataTable extends DataTable
      */
     public function query(Material $model): QueryBuilder
     {
-        return $model->where('status', 'active')->whereHas('lessons', function ($query) {
-            $query->whereHas('ratings');
-        })->newQuery();
+        return $model->withCount('ratings')
+            ->withCount('comments')
+            ->withAvg('ratings', 'rating')
+            ->withMin('ratings', 'rating')
+            ->withMax('ratings', 'rating')
+            ->where('status', 'active')->newQuery();
     }
 
     /**
@@ -67,12 +93,18 @@ class MaterialRatingDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::computed('action')
+            Column::make(__('id')),
+            Column::make(__('Material_name')),
+            Column::make(__('Ratings_count')),
+            Column::make(__('Minimum_rating')),
+            Column::make(__('Average_rating')),
+            Column::make(__('Maximum_rating')),
+            Column::make(__('Count_comments')),
+            Column::computed(__('action'))
                 ->exportable(false)
                 ->printable(false)
-                ->width(60)
+                ->width(150)
                 ->addClass('text-center'),
-            Column::make('id'),
 
         ];
     }

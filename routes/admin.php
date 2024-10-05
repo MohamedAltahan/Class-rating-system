@@ -19,6 +19,7 @@ use App\Http\Controllers\Backend\StudentController;
 use App\Http\Controllers\Backend\StudyYearController;
 use App\Http\Controllers\Backend\WebsiteColorController;
 use App\Http\Controllers\Backend\ClassRoomController;
+use App\Http\Controllers\Backend\CommentController;
 use App\Http\Controllers\ImportExcelController;
 use Illuminate\Support\Facades\Route;
 
@@ -79,8 +80,13 @@ Route::group(
         Route::put('lesson/change-status', [LessonController::class, 'changeStatus'])->name('lesson.change-status');
         Route::resource('lesson', LessonController::class);
 
+        //comment
+        Route::resource('comment', CommentController::class);
+
         //ratings
-        Route::get('rating', [RatingController::class, 'index'])->name('rating.index');
+        Route::get('rating/materials', [RatingController::class, 'allMaterialRatings'])->name('rating.material.allMaterialRatings');
+        Route::get('rating/material/{material_id}', [RatingController::class, 'materialRatingDetails'])->name('rating.material.materialRatingDetails');
+        Route::get('rating/lesson/{lesson_id}', [RatingController::class, 'lessonDetails'])->name('rating.lesson.details');
 
         // update About page
         Route::put('about/update', [AboutController::class, 'update'])->name('about.update');

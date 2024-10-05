@@ -52,13 +52,28 @@ class MaterialController extends Controller
             'name' => 'required|string|max:100',
             'status' => 'required|in:active,inactive',
             'track_id' => ['required', 'exists:tracks,id']
-
         ]);
         $material->update($data);
 
         toastr(__('Updated Successfully'));
 
         return redirect()->route('admin.material.index');
+    }
+
+    public function destroy(string $id)
+    {
+        $material = Material::findOrFail($id);
+
+        $lessons = $material->lessons;
+
+        if (count($lessons) > 0) {
+            return response(['status' => 'error', 'message' => __('Can not delete, the item has lessons.')]);
+        }
+
+        $material->delete();
+
+        toastr(__('Deleted Successfully'));
+        return response(['status' => 'success', 'message' => __('Deleted Successfully')]);
     }
 
     public function changeStatus(Request $request)

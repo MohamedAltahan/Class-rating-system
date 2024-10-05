@@ -15,9 +15,7 @@ class HomeController extends Controller
     public function index()
     {
         $homePageSetting = HomePageSetting::first();
-        $videos = Video::where('at_home', 'yes')->get();
-        $images = Image::where('at_home', 'yes')->get();
-        return view('frontend.pages.home', compact('homePageSetting', 'videos', 'images'));
+        return view('frontend.pages.home', compact('homePageSetting'));
     }
 
     public function about()
