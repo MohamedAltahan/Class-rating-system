@@ -88,6 +88,6 @@ class TrackController extends Controller
         $request->status == "true" ? $track->status = 'active' : $track->status = 'inactive';
         $track->save();
 
-        return response(['message' => 'Status has been updated']);
+        return response(['message' => __('Status has been updated')]);
     }
 }

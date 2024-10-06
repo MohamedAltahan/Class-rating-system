@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\DataTables\ClassesDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\Classes;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class ClassesController extends Controller
@@ -63,5 +64,20 @@ class ClassesController extends Controller
         $class->save();
 
         return response(['message' => __('Status has been updated')]);
+    }
+
+    public function destroy(string $id)
+    {
+        $class = Classes::findOrFail($id);
+
+        $checkExistance = User::where('class_id', $id)->first();
+        if ($checkExistance) {
+            return response(['status' => 'error', 'message' => __('Can not delete, the item belongs to students.')]);
+        }
+        $class->delete();
+
+        toastr(__('Deleted Successfully'));
+
+        return response(['status' => 'success', 'message' => __('Deleted Successfully')]);
     }
 }

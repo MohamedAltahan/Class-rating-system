@@ -77,8 +77,13 @@ class User extends Authenticatable
         return $this->belongsTo(Classes::class);
     }
 
-    public function materials()
+    public function teacherMaterials()
     {
         return $this->belongsToMany(Material::class, 'material_teacher', 'teacher_id', 'material_id', 'id', 'id');
+    }
+
+    public function studentMaterials()
+    {
+        return $this->belongsToMany(Material::class, 'material_student', 'student_id', 'material_id', 'id', 'id');
     }
 }

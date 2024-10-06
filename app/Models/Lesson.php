@@ -25,4 +25,9 @@ class Lesson extends Model
     {
         return $this->hasMany(Comment::class);
     }
+
+    public function teacher()
+    {
+        return $this->belongsTo(User::class, 'teacher_id', 'id');
+    }
 }

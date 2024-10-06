@@ -13,15 +13,18 @@
             <div class="navbar-nav mx-auto py-0">
                 <a href="{{ route('about') }}"
                     class="nav-item nav-link text_color {{ setActive(['about']) }}">{{ __('About us') }}</a>
-                <a href="{{ route('contact.index') }}"
-                    class="nav-item nav-link text_color {{ setActive(['contact.*']) }}">{{ __('Contact us') }}</a>
-                <a href="{{ route('login') }}"
-                    class="nav-item nav-link text_color {{ setActive(['login.*']) }}">{{ __('Login') }}</a>
-                {{-- @foreach ($categories as $category)
-                    <a href="{{ route('category.show', ['id' => $category->id]) }}"
-                        class="nav-item nav-link text_color @if (request()->is("category/$category->id")) active @endif ">
-                        {{ $category->name }}</a>
-                @endforeach --}}
+                @if (!Auth::user())
+                    <a href="{{ route('login') }}" class="nav-item nav-link text_color ">{{ __('Login') }}</a>
+                @else
+                    @if (Auth::user()->role === 'admin')
+                        <a href="{{ route('admin.rating.material.allMaterialRatings') }}"
+                            class="nav-item nav-link text_color ">{{ __('Dashboard') }}</a>
+                    @elseif (Auth::user()->role === 'student')
+                        <a href="{{ route('rating.index') }}"
+                            class="nav-item nav-link text_color ">{{ __('Dashboard') }}</a>
+                    @endif
+                @endif
+
             </div>
 
         </div>

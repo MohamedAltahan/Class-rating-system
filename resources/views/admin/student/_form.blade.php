@@ -22,7 +22,7 @@
     </div>
 
     <div class="form-group col-md-6">
-        <x-form.input type='date' name="birth_date" label="Birth date" class="form-control"
+        <x-form.input label='Birth date' name="birth_date" type="text" class="form-control hijri-date-input"
             value="{{ @$student->birth_date }}" />
     </div>
 
@@ -37,7 +37,7 @@
     </div>
 
     <div class="form-group col-md-6">
-        <x-form.input type='date' name="residence_date" label="Residence date" class="form-control"
+        <x-form.input label='Residence date' name="residence_date" type="text" class="form-control hijri-date-input"
             value="{{ @$student->residence_date }}" />
     </div>
 
@@ -106,3 +106,35 @@
         </select>
     </div>
 </div>
+
+@push('scripts')
+    <script>
+        $(".hijri-date-input").hijriDatePicker({
+
+            icons: {
+                time: 'fa fa-clock text-primary',
+                date: 'glyphicon glyphicon-calendar',
+                up: 'fa fa-chevron-up text-primary',
+                down: 'fa fa-chevron-down text-primary',
+                previous: '<<',
+                next: '>>',
+                today: 'اليوم',
+                clear: 'مسح',
+                close: 'اغلاق'
+            },
+
+            showTodayButton: true,
+            showClear: true,
+            showClose: true,
+
+            allowInputToggle: true,
+            showSwitcher: true,
+            focusOnShow: true,
+            locale: 'ar-SA',
+            format: 'DD-MM-YYYY',
+            hijriFormat: 'iDD/iMM/iYYYY',
+            hijri: true,
+
+        });
+    </script>
+@endpush

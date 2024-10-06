@@ -32,16 +32,16 @@ class MaterialRatingDataTable extends DataTable
                 return $viewBtn;
             })
             ->addColumn(__('Ratings_count'), function ($query) {
-                return $query->ratings_count;
+                return $query->ratings_count ?? 0;
             })
             ->addColumn(__('Minimum_rating'), function ($query) {
-                return $query->ratings_min_rating;
+                return $query->ratings_min_rating ?? 0;
             })
             ->addColumn(__('Average_rating'), function ($query) {
-                return round($query->ratings_avg_rating, 1);
+                return round($query->ratings_avg_rating, 1) ?? 0;
             })
             ->addColumn(__('Maximum_rating'), function ($query) {
-                return $query->ratings_max_rating;
+                return $query->ratings_max_rating ?? 0;
             })
             ->addColumn(__('Count_comments'), function ($query) {
                 return $query->comments_count ?? 0;

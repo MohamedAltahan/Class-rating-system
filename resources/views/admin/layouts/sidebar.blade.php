@@ -14,22 +14,11 @@
                     href="{{ route('admin.rating.material.allMaterialRatings') }}" class="nav-link "><i
                         class="fas fa-star"></i><span>{{ __('Ratings') }}</span></a></li>
 
-            {{-- ___________________________Persons__________________________________________________ --}}
-            <li class="menu-header" style="color: black"> </i>{{ 'Persons' }}</li>
-
-            <li class="{{ setActive(['admin.teacher.*']) }}"><a href="{{ route('admin.teacher.index') }}"
-                    class="nav-link "><i class="fas fa-chalkboard-teacher"></i><span>{{ __('Teachers') }}</span></a>
-            </li>
-
-            <li class="{{ setActive(['admin.student.*']) }}"><a href="{{ route('admin.student.index') }}"
-                    class="nav-link "><i class="fas fa-user-graduate"></i><span>{{ __('Students') }}</span></a></li>
-
             {{-- ___________________________setting__________________________________________________ --}}
             <li class="menu-header" style="color: black"> </i>{{ __('Materials') }}</li>
 
             <li class="{{ setActive(['admin.track.*']) }}"><a href="{{ route('admin.track.index') }}"
-                    class="nav-link "><i
-                        class="fab fa-stack-overflow"></i><span>{{ __('Education tracks') }}</span></a>
+                    class="nav-link "><i class="fab fa-stack-overflow"></i><span>{{ __('Education tracks') }}</span></a>
             </li>
 
             <li class="{{ setActive(['admin.class.*']) }}"><a href="{{ route('admin.class.index') }}"
@@ -40,12 +29,25 @@
                     class="nav-link "><i class="fas fa-door-open"></i><span>{{ __('Class rooms') }}</span></a>
             </li>
 
-            <li class="{{ setActive(['admin.material.*']) }}"><a href="{{ route('admin.material.index') }}"
-                    class="nav-link "><i class="fas fa-book"></i><span>{{ __('Materials') }}</span></a>
+            <li class="{{ setActive(['admin.material.*', 'admin.lesson.*']) }}"><a
+                    href="{{ route('admin.material.index') }}" class="nav-link "><i
+                        class="fas fa-book"></i><span>{{ __('Materials') }}</span></a>
             </li>
 
-            <li class="{{ setActive(['admin.lesson.*']) }}"><a href="{{ route('admin.lesson.index') }}"
-                    class="nav-link "><i class="fas fa-pen-fancy"></i><span>{{ __('Lessons') }}</span></a></li>
+            {{-- <li class="{{ setActive(['admin.lesson.*']) }}"><a href="{{ route('admin.lesson.index') }}"
+                    class="nav-link "><i class="fas fa-pen-fancy"></i><span>{{ __('Lessons') }}</span></a></li> --}}
+
+
+            {{-- ___________________________Persons__________________________________________________ --}}
+            <li class="menu-header" style="color: black"> </i>{{ 'Persons' }}</li>
+
+            <li class="{{ setActive(['admin.teacher.*']) }}"><a href="{{ route('admin.teacher.index') }}"
+                    class="nav-link "><i class="fas fa-chalkboard-teacher"></i><span>{{ __('Teachers') }}</span></a>
+            </li>
+
+            <li class="{{ setActive(['admin.student.*']) }}"><a
+                    href="{{ route('admin.student.show-students-tracks') }}" class="nav-link "><i
+                        class="fas fa-user-graduate"></i><span>{{ __('Students') }}</span></a></li>
 
             {{-- ___________________________Social media__________________________________________________ --}}
             <li class="menu-header" style="color: black"> </i>{{ __('Social media') }}</li>

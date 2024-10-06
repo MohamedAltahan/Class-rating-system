@@ -12,18 +12,20 @@ use Illuminate\Support\Facades\Storage;
 
 class AdminProfileController extends Controller
 {
-    //index-------------------------------------------------------------------
+
     public function index()
     {
         return view('admin.profile.index');
     }
-    // user profile update----------------------------------------------------------
+
     public function profileUpdate(Request $request)
     {
 
         $request->validate([
             'name' => ['required', 'max:100'],
-            'email' => ['required', 'email', 'unique:users,email,' . Auth::guard('web')->user()->id],
+            'phone' => ['required', 'max:15'],
+            'residence_number' => ['required', 'max:20', 'unique:users,residence_number,' . Auth::guard('web')->user()->id],
+            'email' => ['sometimes', 'nullable', 'email', 'unique:users,email,' . Auth::guard('web')->user()->id],
             'image' => ['image', 'max:2048']
         ]);
 
@@ -42,11 +44,11 @@ class AdminProfileController extends Controller
         if ($oldImage && $newImage) {
             Storage::disk('myDisk')->delete($oldImage);
         }
-        toastr()->success('Profile updated successfully');
+        toastr()->success(__('Profile updated successfully'));
+
         return redirect()->back();
     }
 
-    //Admin update password ----------------------------------------------------------------
     public function passwordUpdate(Request $request)
     {
         $request->validate([
@@ -63,11 +65,13 @@ class AdminProfileController extends Controller
                 'password' => bcrypt($request->password)
             ]);
         } else {
-            toastr()->error('worng current password');
+            toastr()->error(__('worng current password'));
+
             return redirect()->back();
         }
 
-        toastr()->success('Password updated successfully');
+        toastr()->success(__('Password updated successfully'));
+
         return redirect()->back();
     }
 

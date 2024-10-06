@@ -28,8 +28,9 @@ class LessonController extends Controller
         $trackId = $request->trackId;
         $teachers = Material::where('status', 'active')
             ->findOrFail($materialId)->teachers;
+        $material = Material::findOrFail($request->materialId);
 
-        return view('admin.material.lesson.create', compact('teachers', 'materialId', 'trackId'));
+        return view('admin.material.lesson.create', compact('material', 'teachers', 'materialId', 'trackId'));
     }
 
     public function store(Request $request)
@@ -37,7 +38,7 @@ class LessonController extends Controller
         $data =  $request->validate([
             'name' => ['required', 'string', 'max:150'],
             'material_id' => ['required', 'exists:materials,id'],
-            'teacher_id' => ['sometimes', 'nullable', 'exists:users,id'],
+            'teacher_id' => ['required', 'exists:users,id'],
             'track_id' => ['required', 'exists:tracks,id'],
             'date_time' => ['date'],
             'status' => ['in:active,inactive']
@@ -64,8 +65,9 @@ class LessonController extends Controller
 
         $teachers = Material::where('status', 'active')
             ->findOrFail($lesson->material->id)->teachers;
+        $material = Material::findOrFail($id);
 
-        return view('admin.material.lesson.edit', compact('lesson', 'teachers'));
+        return view('admin.material.lesson.edit', compact('lesson', 'teachers', 'material'));
     }
 
     public function update(Request $request, string $id)
@@ -75,7 +77,7 @@ class LessonController extends Controller
         $data = $request->validate([
             'name' => ['required', 'string', 'max:150'],
             'material_id' => ['required', 'exists:materials,id'],
-            'teacher_id' => ['sometimes', 'nullable', 'exists:users,id'],
+            'teacher_id' => ['required', 'exists:users,id'],
             'track_id' => ['required', 'exists:tracks,id'],
             'date_time' => ['date'],
             'status' => ['in:active,inactive']

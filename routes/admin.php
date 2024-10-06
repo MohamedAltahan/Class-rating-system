@@ -24,7 +24,7 @@ use App\Http\Controllers\ImportExcelController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(
-    ['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'],
+    ['middleware' => ['auth', 'role:admin'], 'prefix' => 'admin', 'as' => 'admin.'],
     function () {
         Route::get('dashboard', [AdminController::class, 'dashboard'])
             ->name('dashboard');
@@ -42,21 +42,25 @@ Route::group(
         Route::put('logo-setting-update', [SettingController::class, 'logoSettingUpdate'])->name('logo-setting-update.update');
         Route::put('general-settnig-update', [SettingController::class, 'generalSettingUpdate'])->name('general-setting-update.index');
 
-        //student
+        //student materials
         Route::get('student-materials/create', [StudentController::class, 'createMaterial'])->name('student.materials.create');
         Route::post('student-materials/store', [StudentController::class, 'storeMaterial'])->name('student.materials.store');
         Route::get('student-materials/{studentId}', [StudentController::class, 'studentMaterials'])->name('student.materials');
         Route::delete('student-materials/', [StudentController::class, 'destroyMaterial'])->name('student.materials.destroy');
 
+        //student
+        Route::get('student/classes/{track_id}', [StudentController::class, 'showStudentsclasses'])->name('student.show-students-classes');
+        Route::get('student/tracks', [StudentController::class, 'showStudentsTracks'])->name('student.show-students-tracks');
         Route::put('student/change-status', [StudentController::class, 'changeStatus'])->name('student.change-status');
         Route::resource('student', StudentController::class);
 
-        //teacher
+        //teacher materials
         Route::get('teacher-materials/create', [TeacherController::class, 'createMaterial'])->name('teacher.materials.create');
         Route::post('teacher-materials/store', [TeacherController::class, 'storeMaterial'])->name('teacher.materials.store');
         Route::delete('teacher-materials/', [TeacherController::class, 'destroyMaterial'])->name('teacher.materials.destroy');
         Route::get('teacher-materials/{teacherId}', [TeacherController::class, 'teacherMaterials'])->name('teacher.materials');
 
+        //teacher
         Route::put('teacher/change-status', [TeacherController::class, 'changeStatus'])->name('teacher.change-status');
         Route::resource('teacher', TeacherController::class);
 

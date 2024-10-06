@@ -4,6 +4,8 @@ namespace App\Http\Controllers\AdminAuth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Models\LogoSetting;
+use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -17,7 +19,8 @@ class AuthenticatedSessionController extends Controller
      */
     public function create(): View
     {
-        return view('admin.auth.login');
+        $logoSetting = LogoSetting::first();
+        return view('admin.auth.login', compact('logoSetting'));
     }
 
     /**
@@ -25,11 +28,24 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
+
+        $user = User::where('residence_number', $request->residence_number)->first();
+
+        // Check if the user exists and is inactive
+        if ($user && $user->status !== 'active') {
+            return redirect()->route('home');
+        }
         $request->authenticate('admin');
 
         $request->session()->regenerate();
 
-        return redirect()->route('admin.rating.material.allMaterialRatings');
+        if ($request->user()->role === 'admin') {
+            return redirect()->route('admin.rating.material.allMaterialRatings');
+        }
+        if ($request->user()->role === 'student') {
+            return redirect()->route('rating.index');
+        }
+        return redirect()->route('home');
     }
 
     /**

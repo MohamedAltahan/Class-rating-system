@@ -57,6 +57,9 @@ class StudentDataTable extends DataTable
             ->addColumn(__('Calss room'), function ($query) {
                 return  $query->classRoom->name;
             })
+            ->addColumn(__('Material_number'), function ($query) {
+                return  $query->studentMaterials->count();
+            })
             ->rawColumns([__('action'), __('status')]);
     }
 
@@ -65,7 +68,11 @@ class StudentDataTable extends DataTable
      */
     public function query(User $model): QueryBuilder
     {
-        return $model->where('role', 'student')->newQuery();
+        return $model->with('studentMaterials')
+            ->where('role', 'student')
+            ->where('track_id', $this->trackId)
+            ->where('class_id', $this->classId)
+            ->newQuery();
     }
 
     /**
@@ -102,6 +109,7 @@ class StudentDataTable extends DataTable
             Column::make(__('Track')),
             Column::make(__('Calss')),
             Column::make(__('Calss room')),
+            Column::make(__('Material_number')),
             Column::make(__('Status')),
             Column::computed(__('action'))
                 ->exportable(false)

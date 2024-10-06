@@ -37,6 +37,13 @@ class Material extends Model
 
     public function teachers()
     {
-        return $this->belongsToMany(User::class, 'material_teacher', 'material_id', 'teacher_id')->where('role', 'teacher');
+        return $this->belongsToMany(User::class, 'material_teacher', 'material_id', 'teacher_id')
+            ->where('role', 'teacher');
+    }
+
+    public function students()
+    {
+        return $this->belongsToMany(User::class, 'material_student', 'material_id', 'studnet_id')
+            ->where('role', 'student');
     }
 }

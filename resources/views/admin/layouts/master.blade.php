@@ -147,13 +147,14 @@
                     event.preventDefault();
                     let deleteUrl = $(this).attr('href');
                     Swal.fire({
-                        title: "Are you sure?",
-                        text: "You won't be able to revert this!",
+                        title: "{{ __('Are you sure?') }}",
+                        text: "{{ __('You wont be able to revert this!') }}",
                         icon: "warning",
                         showCancelButton: true,
                         confirmButtonColor: "#3085d6",
                         cancelButtonColor: "#d33",
-                        confirmButtonText: "Yes, delete it!"
+                        confirmButtonText: "{{ __('Yes, delete it!') }}",
+                        cancelButtonText: "{{ __('No') }}"
                     }).then((result) => {
                         if (result.isConfirmed) {
 
@@ -164,14 +165,14 @@
                                 success: function(data) {
                                     if (data.status == 'success') {
                                         Swal.fire({
-                                            title: "Deleted!",
+                                            title: "{{ __('Deleted!') }}",
                                             text: data.message,
                                             icon: "success"
                                         });
                                         window.location.reload();
                                     } else if (data.status == 'error') {
                                         Swal.fire({
-                                            title: "Not Deleted!",
+                                            title: "{{ __('Not Deleted!') }}",
                                             text: data.message,
                                             icon: "fail"
                                         });

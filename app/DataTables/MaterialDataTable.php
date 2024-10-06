@@ -25,14 +25,13 @@ class MaterialDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->addColumn(__('action'), function ($query) {
-                $addLessonBtn = "<a href='" . route('admin.lesson.create', ['materialId' => $query->id, 'trackId' => $query->track->id])  . "'class='btn btn-sm mx-1 my-1 btn-warning'><i class='far fa-edit'></i>" . __('Add lesson') . "</a>";
-                if (Route::currentRouteName() != 'admin.lesson.index') {
-                    $editBtn = "<a href='" . route('admin.material.edit', $query->id)  . "'class='btn btn-sm btn-primary'><i class='far fa-edit'></i>" . __('Edit') . "</a>";
-                    $deleteBtn = "<a href='" . route('admin.material.destroy', $query->id)  . "'class='btn btn-sm ml-1 my-1 btn-danger delete-item'><i class='fas fa-trash'></i>" . __('Delete') . "</a>";
-                } else {
-                    $viewLessons = "<a href='" . route('admin.lesson.show', $query->id)  . "'class='btn btn-sm ml-1 my-1 btn-info'><i class='far fa-edit'></i>" . __('View lessons') . "</a>";
-                }
-                return $addLessonBtn . @$editBtn . @$deleteBtn . @$viewLessons;
+
+                $addLessonBtn = "<a href='" . route('admin.lesson.create', ['materialId' => $query->id, 'trackId' => $query->track->id])  . "'class='btn btn-sm mx-1 my-1 btn-warning'><i class='fas fa-plus'></i>" . __('Add lesson') . "</a>";
+                $editBtn = "<a href='" . route('admin.material.edit', $query->id)  . "'class='btn btn-sm ml-1 btn-primary'><i class='far fa-edit'></i>" . __('Edit') . "</a>";
+                $deleteBtn = "<a href='" . route('admin.material.destroy', $query->id)  . "'class='btn btn-sm ml-1 my-1 btn-danger delete-item'><i class='fas fa-trash'></i>" . __('Delete') . "</a>";
+                $viewLessons = "<a href='" . route('admin.lesson.show', $query->id)  . "'class='btn btn-sm ml-1 my-1 btn-info'><i class='fas fa-eye'></i>" . __('View lessons') . "</a>";
+
+                return @$addLessonBtn . @$viewLessons . @$editBtn . @$deleteBtn;
             })
 
             ->addColumn(__('status'), function ($query) {
@@ -65,6 +64,7 @@ class MaterialDataTable extends DataTable
      */
     public function query(Material $model): QueryBuilder
     {
+
         return $model->newQuery();
     }
 
@@ -103,7 +103,7 @@ class MaterialDataTable extends DataTable
             Column::computed(__('action'))
                 ->exportable(false)
                 ->printable(false)
-                ->width(240)
+                ->width(360)
                 ->addClass('text-center'),
         ];
     }

@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Classes;
 use App\Models\User;
 use App\Models\Design;
+use App\Models\Lesson;
 use App\Models\Material;
 use App\Models\SubCategory;
 use Illuminate\Http\Request;
@@ -102,13 +103,14 @@ class TeacherController extends Controller
             return response(['status' => 'error', 'message' => __('Can not delete, the item not found.')]);
         }
 
-        $design = Classes::where('teacher_id', $id)->first();
+        $lesson = Lesson::where('teacher_id', $id)->first();
 
-        if (isset($design)) {
+        if (isset($lesson)) {
             return response(['status' => 'error', 'message' => __('Can not delete this teacher, he has classes.')]);
         }
 
         $teacher->delete();
+
         toastr(__('Deleted Successfully'));
         return response(['status' => 'success', 'message' => __('Deleted Successfully')]);
     }
@@ -146,7 +148,7 @@ class TeacherController extends Controller
         ]);
 
         $teacher = User::findOrFail($request->teacher_id);
-        $teacher->materials()->syncWithoutDetaching($request->material_id);
+        $teacher->teacherMaterials()->syncWithoutDetaching($request->material_id);
 
         toastr(__('Created Successfully'));
 
@@ -157,7 +159,7 @@ class TeacherController extends Controller
     {
         $material = Material::findOrFail($request->materialId);
         $teacher = User::findOrFail($request->teacherId);
-        $teacher->materials()->detach($material->id);
+        $teacher->teacherMaterials()->detach($material->id);
         toastr(__('Deleted Successfully'));
         return response(['status' => 'success', 'message' => __('Deleted Successfully')]);
     }

@@ -3,12 +3,13 @@
         <div class="col-md-8">
             <!-- Display Comments -->
             <div class="mt-4">
-                <h5 class="text-primary">{{ __('Comments') }}</h5>
+                <p class=" text-primary  fs-2 d-inline">{{ __('(admin can only delete any comment)') }}</p>
+                <h5 class="text-primary d-inline">{{ __('Comments') }} </h5>
                 @forelse($lesson->comments as $comment)
                     <div class="card mt-2">
                         <div class="card-body">
                             <p class="text-muted">{{ @$comment->user->name }} :
-                                {{ @$comment->created_at->format('M d, Y') }}</p>
+                                {{ Alkoumi\LaravelHijriDate\Hijri::Date('Y-m-d g:i A', @$comment->created_at) }}</p>
                             <h5 class="mb-1">{{ @$comment->comment }}</h5>
                             <a class="text-danger delete-item"
                                 href="{{ route('admin.comment.destroy', $comment->id) }}">{{ __('Delete') }}</a>
@@ -39,7 +40,6 @@
                     </form>
                 </div>
             </div>
-
 
         </div>
     </div>

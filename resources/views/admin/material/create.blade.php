@@ -5,6 +5,7 @@
     <div class="card-header">
         <h4>{{ __('Create material') }}</h4>
         <div class="card-header-action">
+            
         </div>
     </div>
 

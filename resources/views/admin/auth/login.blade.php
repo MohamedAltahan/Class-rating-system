@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-        <title>Login</title>
+        <title>{{ __('Login') }}</title>
 
         <!-- General CSS Files -->
         <link rel="stylesheet" href="{{ asset('backend/assets/modules/bootstrap/css/bootstrap.min.css') }}">
@@ -45,11 +45,11 @@
 
                             <div class="card card-primary">
                                 <div class="card-header">
-                                    <h4>Login</h4>
+                                    <h4>{{ __('Login') }}</h4>
                                 </div>
 
                                 <div class="card-body">
-                                    <form method="POST" action="{{ route('admin.login') }}" class="needs-validation"
+                                    <form method="POST" action="{{ route('login') }}" class="needs-validation"
                                         novalidate="">
                                         @csrf
 
@@ -57,16 +57,14 @@
                                         <!-- Email Address -->
                                         <div class="form-group">
 
-                                            <x-form.input label="Email" id="email" type="email" name="email"
-                                                lable='email' required autofocus />
+                                            <x-form.input id="residence_number" type="text" name="residence_number"
+                                                label='Residence number' required autofocus />
                                         </div>
                                         <!-- password Address -->
                                         <div class="form-group">
                                             <div class="d-block">
                                                 <div class="float-right">
-                                                    <a href="{{ route('admin.password.request') }}" class="text-small">
-                                                        Forgot Password?
-                                                    </a>
+
                                                 </div>
                                             </div>
                                             <x-form.input id="password" type="password" name="password"
@@ -75,16 +73,16 @@
 
                                         <div class="form-group">
                                             <div class="custom-control custom-checkbox">
-                                                <input id="remember_me" type="checkbox" name="remember" tabindex="3">
-                                                <label for="remember_me">Remember
-                                                    Me</label>
+                                                <input id="remember_me" type="checkbox" checked name="remember"
+                                                    tabindex="3">
+                                                <label for="remember_me">{{ __('Remember Me') }}</label>
                                             </div>
                                         </div>
 
                                         <div class="form-group">
                                             <button type="submit" class="btn btn-primary btn-lg btn-block"
                                                 tabindex="4">
-                                                Login
+                                                {{ __('Login') }}
                                             </button>
                                         </div>
                                     </form>

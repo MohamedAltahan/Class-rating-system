@@ -2,38 +2,42 @@
 
 
 use App\Http\Controllers\Frontend\CategoryController;
+use App\Http\Controllers\Frontend\CommentsController;
 use App\Http\Controllers\Frontend\ContactController;
 use App\Http\Controllers\Frontend\DesignDetailsController;
 use App\Http\Controllers\Frontend\HomeController;
+use App\Http\Controllers\Frontend\LessonController;
+use App\Http\Controllers\Frontend\MaterialController;
+use App\Http\Controllers\Frontend\StudentController;
+use App\Http\Controllers\Frontend\StudentProfileController;
+use App\Http\Controllers\Frontend\UserProfileController;
+use App\Models\Material;
 use Illuminate\Support\Facades\Route;
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
 
 Route::controller(HomeController::class)->group(function () {
     Route::get('/', 'index')->name('home');
     Route::get('about', 'about')->name('about');
 });
-Route::controller(ContactController::class)->group(function () {
-    Route::get('contact', 'index')->name('contact.index');
-    Route::post('contact', 'store')->name('contact.store');
-});
 
-Route::controller(DesignDetailsController::class)->group(function () {
-    Route::get('design-details/{id}', 'index')->name('design-details.index');
-});
+Route::group(
+    ['middleware' => ['auth', 'role:student']],
+    function () {
+        Route::resource('rating', MaterialController::class);
 
-Route::controller(CategoryController::class)->group(function () {
-    Route::get('category/{id}', 'show')->name('category.show');
-});
+        route::post('lesson/rating/submit', [LessonController::class, 'submitRating'])->name('lesson.submit-rating');
+        Route::get('lesson/rate/{lesson_id}/{material_id}', [LessonController::class, 'rateLesson'])->name('lesson.rate-lesson');
+        Route::resource('lesson', LessonController::class);
+
+        //comment
+        Route::resource('comment', CommentsController::class);
+
+        //profile routes
+        Route::get('profile', [StudentProfileController::class, 'index'])->name('profile');
+        Route::post('profile/update', [StudentProfileController::class, 'profileUpdate'])->name('profile.update');
+        Route::post('profile/update/password', [StudentProfileController::class, 'passwordUpdate'])->name('password.update');
+    }
+);
+
 
 
 require __DIR__ . '/admin.php';

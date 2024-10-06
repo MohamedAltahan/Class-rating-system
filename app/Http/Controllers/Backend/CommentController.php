@@ -30,10 +30,6 @@ class CommentController extends Controller
     {
         $comment = Comment::findOrFail($commentId);
 
-        if (Auth::user()->id != $comment->user_id && Auth::user()->role = ! 'admin') {
-            abort(403);
-        }
-
         $comment->delete();
 
         return response(['status' => 'success', 'message' => __('Deleted Successfully')]);

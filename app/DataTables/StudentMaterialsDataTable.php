@@ -24,10 +24,13 @@ class StudentMaterialsDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('name', function ($query) {
+            ->addColumn(__('name'), function ($query) {
                 return  $query->name;
             })
-            ->addColumn('action', function ($query) {
+            ->addColumn(__('Track'), function ($query) {
+                return  $query->track->name;
+            })
+            ->addColumn(__('action'), function ($query) {
                 $deleteBtn = "<a href='" . route('admin.student.materials.destroy', ['materialId' => $query->id, 'studentId' => $this->studentId])  . "'class='btn btn-sm ml-1 my-1 btn-danger delete-item'><i class='fas fa-trash'></i>" . __('Delete') . "</a>";
                 return  $deleteBtn;
             })
@@ -48,10 +51,10 @@ class StudentMaterialsDataTable extends DataTable
                 return $button;
             })
 
-            ->addColumn('id', function ($query) {
+            ->addColumn(__('id'), function ($query) {
                 return $this->counter++;
             })
-            ->rawColumns(['action', 'status']);
+            ->rawColumns([__('action'), 'status']);
     }
 
     /**
@@ -93,9 +96,10 @@ class StudentMaterialsDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::make('id'),
-            Column::make('name'),
-            Column::computed('action')
+            Column::make(__('id')),
+            Column::make(__('name')),
+            Column::make(__('Track')),
+            Column::computed(__('action'))
                 ->exportable(false)
                 ->printable(false)
                 ->width(150)

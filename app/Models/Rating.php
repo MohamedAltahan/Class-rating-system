@@ -12,6 +12,8 @@ class Rating extends Model
         'class_id',
         'user_id',
         'rating',
+        'lesson_id',
+        'material_id'
     ];
 
     // Relationships

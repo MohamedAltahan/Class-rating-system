@@ -44,9 +44,7 @@ class TrackDataTable extends DataTable
 
                 return $button;
             })
-            ->addColumn('information', function ($query) {
-                return $query->description;
-            })
+
             ->addColumn(__('id'), function ($query) {
                 return $this->counter++;
             })

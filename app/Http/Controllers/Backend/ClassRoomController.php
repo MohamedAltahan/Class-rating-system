@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\DataTables\ClassRoomDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\ClassRoom;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class ClassRoomController extends Controller
@@ -35,8 +36,8 @@ class ClassRoomController extends Controller
 
     public function edit($id)
     {
-        $class = ClassRoom::findOrFail($id);
-        return view('admin.class-room.edit', compact('class'));
+        $classRoom = ClassRoom::findOrFail($id);
+        return view('admin.class-room.edit', compact('classRoom'));
     }
 
     public function update(Request $request, string $id)
@@ -62,5 +63,19 @@ class ClassRoomController extends Controller
         $class->save();
 
         return response(['message' => __('Status has been updated')]);
+    }
+
+    public function destroy(string $id)
+    {
+        $lesson = ClassRoom::findOrFail($id);
+        $checkExistance = User::where('class_room_id', $id)->first();
+        if ($checkExistance) {
+            return response(['status' => 'error', 'message' => __('Can not delete, the item belongs to students.')]);
+        }
+        $lesson->delete();
+
+        toastr(__('Deleted Successfully'));
+
+        return response(['status' => 'success', 'message' => __('Deleted Successfully')]);
     }
 }

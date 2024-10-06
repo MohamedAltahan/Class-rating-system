@@ -1,5 +1,5 @@
 @extends('frontend.layout.master')
-{{-- 
+{{--
 @section('content')
     <div class="container py-5 text-center">
         <div class="wow fadeInUp" data-wow-delay="0.1s">

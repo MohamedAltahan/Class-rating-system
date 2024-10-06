@@ -5,7 +5,6 @@
 
         @php
             $setting = \App\Models\Setting::first();
-            // $categories = \App\Models\Category::where('status', 'active')->get();
             $socials = \App\Models\Social::where('status', 'active')->get();
             $logo = \App\Models\LogoSetting::first();
             $color = \App\Models\WebsiteColor::first() ?? new \App\Models\WebsiteColor();

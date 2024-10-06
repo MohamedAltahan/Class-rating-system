@@ -44,7 +44,7 @@ class TeacherDataTable extends DataTable
 
                 return $button;
             })
-            ->addColumn('information', function ($query) {
+            ->addColumn(__('teacher_description'), function ($query) {
                 return $query->description;
             })
             ->addColumn(__('id'), function ($query) {
@@ -94,7 +94,7 @@ class TeacherDataTable extends DataTable
 
             Column::make(__('id')),
             Column::make('name'),
-            Column::make('description'),
+            Column::make(__('teacher_description')),
             Column::make(__('status'))->width(60),
             Column::computed(__('action'))
                 ->exportable(false)

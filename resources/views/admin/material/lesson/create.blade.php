@@ -3,9 +3,7 @@
 @section('content')
 
     <div class="card-header">
-        <h4>{{ __('Create lesson') }}</h4>
-        <div class="card-header-action">
-        </div>
+        <h4>{{ __('Create lesson') }}{{ ' : ' . $material->name }}</h4>
     </div>
     <div class="card-body">
         <form action="{{ route('admin.lesson.store') }}" method="POST">

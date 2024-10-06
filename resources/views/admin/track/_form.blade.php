@@ -10,4 +10,4 @@
     </select>
 </div>
 
-<button type="submit" class="btn btn-primary">{{ $buttonLabel ?? __('Create') }}</button>
+<button type="submit" class="btn btn-primary">{{ __(@$buttonLabel) ?? __('Create') }}</button>

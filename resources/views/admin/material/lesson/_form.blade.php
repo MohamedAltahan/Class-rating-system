@@ -24,6 +24,11 @@
             <option value="">{{ __('No teachers please add') }}</option>
         @endforelse
     </select>
+    @if ($errors->has('teacher_id'))
+        <div class="text-danger mt-1">
+            {{ $errors->first('teacher_id') }}
+        </div>
+    @endif
 </div>
 
 <div class="form-group">
