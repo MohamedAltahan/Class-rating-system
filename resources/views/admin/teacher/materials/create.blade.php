@@ -15,7 +15,8 @@
                 <label for="">{{ __('Materials') }}</label>
                 <select name="material_id" class="form-control">
                     @foreach ($materials as $material)
-                        <option value="{{ $material->id }}">{{ __($material->name) }}</option>
+                        <option value="{{ $material->id }}">{{ __($material->name) }} ({{ __($material->track->name) }})
+                        </option>
                     @endforeach
                 </select>
             </div>

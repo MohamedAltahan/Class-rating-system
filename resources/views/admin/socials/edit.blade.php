@@ -1,9 +1,9 @@
 @extends('admin.layouts.master')
-@section('mainTitle', 'Socials')
+@section('mainTitle', __('Socials'))
 @section('content')
 
     <div class="card-header">
-        <h4>Update social button</h4>
+        <h4>{{ __('Update social button') }}</h4>
         <div class="card-header-action">
         </div>
     </div>
@@ -13,7 +13,7 @@
             @csrf
             @method('PUT')
             <div class="form-group">
-                <label for="">select icon</label>
+                <label for="">{{ __('Select icon') }}</label>
                 <div>
                     <button name="icon" data-selected-class="btn-danger" data-unselected-class="btn-info"
                         class="btn btn-primary" role="iconpicker" data-icon="{{ $footerButtonInfo->icon }}"></button>
@@ -35,14 +35,14 @@
             </div>
 
             <div class="form-group">
-                <label for="">status</label>
+                <label for="">{{ __('Status') }}</label>
                 <select name="status" id="inputStatus" class="form-control">
-                    <option @selected($footerButtonInfo->status == 'active') value="active">Active</option>
-                    <option @selected($footerButtonInfo->status == 'inactive') value="inactive">Inactive</option>
+                    <option @selected($footerButtonInfo->status == 'active') value="active">{{ __('Active') }}</option>
+                    <option @selected($footerButtonInfo->status == 'inactive') value="inactive">{{ __('Inactive') }}</option>
                 </select>
             </div>
 
-            <button type="submit" class="btn btn-primary">Update</button>
+            <button type="submit" class="btn btn-primary">{{ __('Update') }}</button>
 
         </form>
     </div>

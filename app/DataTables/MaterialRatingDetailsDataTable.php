@@ -62,7 +62,9 @@ class MaterialRatingDetailsDataTable extends DataTable
             ->withCount('comments')
             ->withAvg('ratings', 'rating')
             ->withMin('ratings', 'rating')
-            ->withMax('ratings', 'rating')->newQuery();
+            ->withMax('ratings', 'rating')
+            ->where('material_id', $this->materialId)
+            ->newQuery();
     }
 
     /**

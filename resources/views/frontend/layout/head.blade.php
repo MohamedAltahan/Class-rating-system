@@ -1,6 +1,7 @@
 <div class="container main_header" style="padding:5% 0">
 
     <div class="row g-5 align-items-center flex-wrap-reverse">
+
         <div class="col-lg-6 text-center ">
 
             <div class="text-white mb-4 animated slideInDown px-2">
@@ -28,13 +29,13 @@
                     </a>
                 @endif
             @endif
-
         </div>
 
-        <div class="col-lg-5 col-sm-5 text-center animated  slideInRight ">
-            <img class=" animated  fadeIn  wow" data-wow-delay="0.3s" height="600px" style="background-size: cover"
-                src="{{ asset('uploads/' . $homePageSetting->image) }}" alt="">
+        <div class="col-md-5 col-md-5 animated  slideInRight ">
+            <img class=" animated  fadeIn img-fluid wow" data-wow-delay="0.3s" height="600px"
+                style="background-size: cover" src="{{ asset('uploads/' . $homePageSetting->image) }}" alt="">
         </div>
+
 
     </div>
 </div>

@@ -50,6 +50,7 @@ class RatingDataTable extends DataTable
     {
         return $model->newQuery()->select('materials.*')
             ->join('material_student', 'materials.id', '=', 'material_student.material_id')
+            ->where('status', 'active')
             ->where('material_student.student_id', Auth::user()->id);;
     }
 

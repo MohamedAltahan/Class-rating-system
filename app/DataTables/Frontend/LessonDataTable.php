@@ -5,6 +5,7 @@ namespace App\DataTables\Frontend;
 use App\Models\Lesson;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
+use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\Html\Button;
@@ -51,6 +52,8 @@ class LessonDataTable extends DataTable
     {
         return $model->with('teacher')
             ->where('material_id', $this->materialId)
+            ->where('status', 'active')
+            ->where('track_id', Auth::user()->track_id)
             ->orderBy('created_at', 'desc')
             ->newQuery();
     }

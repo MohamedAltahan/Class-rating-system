@@ -4,7 +4,8 @@
 
 
     <div class="card-header">
-        <h4>{{ __('All students') }}</h4>
+        <h4 class="d-block">{{ '-' . $track->name . '-' }}</h4>
+        <h4 class="d-block">{{ __('All students') }} {{ ' : ' . $class->name }}</h4>
         <div class="card-header-action">
             <a href="{{ route('admin.student.create') }}" class="btn btn-primary">{{ __('+ Create new') }}</a>
         </div>

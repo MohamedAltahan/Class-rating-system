@@ -1,9 +1,9 @@
 @extends('admin.layouts.master')
-@section('mainTitle', 'Footer')
+@section('mainTitle', __('Socials'))
 @section('content')
 
     <div class="card-header">
-        <h4>Create Footer social button</h4>
+        <h4>{{ __('Create social button') }}</h4>
         <div class="card-header-action">
         </div>
     </div>
@@ -13,7 +13,7 @@
             @csrf
 
             <div class="form-group">
-                <label for="">select icon</label>
+                <label for="">{{ __('Select icon') }}</label>
                 <div>
                     <button name="icon" data-selected-class="btn-danger" data-unselected-class="btn-info"
                         class="btn btn-primary" role="iconpicker"></button>
@@ -34,14 +34,14 @@
             </div>
 
             <div class="form-group">
-                <label for="">status</label>
+                <label for="">{{ __('Status') }}</label>
                 <select name="status" id="inputStatus" class="form-control">
-                    <option value="active">Active</option>
-                    <option value="inactive">Inactive</option>
+                    <option value="active">{{ __('Active') }}</option>
+                    <option value="inactive">{{ __('Inactive') }}</option>
                 </select>
             </div>
 
-            <button type="submit" class="btn btn-primary">Create</button>
+            <button type="submit" class="btn btn-primary">{{__('Create')}}</button>
 
         </form>
     </div>

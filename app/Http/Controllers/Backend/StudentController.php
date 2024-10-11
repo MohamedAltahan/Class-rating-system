@@ -24,8 +24,9 @@ class StudentController extends Controller
         $trackId = request()->trackId;
         $classId = request()->classId;
         $class = Classes::findOrFail($classId);
+        $track = Track::findOrFail($trackId);
         return $dataTable->with(['classId' => $classId, 'trackId' => $trackId])
-            ->render('admin.student.index', ['class' => $class]);
+            ->render('admin.student.index', ['class' => $class, 'track' => $track]);
     }
 
     public function create()
@@ -45,7 +46,7 @@ class StudentController extends Controller
             'birth_place' => 'required|string|max:200',
             'birth_date' => 'required|string',
             'nationality' => 'required|string|max:200',
-            'residence_number' => 'sometimes|nullable|string|max:200',
+            'residence_number' => 'required|string|max:200',
             'residence_date' => 'sometimes|nullable|string',
             'class_id' => 'required|exists:classes,id',
             'class_room_id' => 'required|exists:class_rooms,id',
@@ -58,9 +59,9 @@ class StudentController extends Controller
         $data['password'] = Hash::make($data['password']);
         User::create($data);
 
-        toastr(__('Crated successfully'));
+        toastr(__('Created successfully'));
 
-        return redirect()->route('admin.student.index');
+        return redirect()->back();
     }
 
     public function edit(string $id)
@@ -85,7 +86,7 @@ class StudentController extends Controller
             'birth_place' => 'required|string|max:200',
             'birth_date' => 'required|string',
             'nationality' => 'required|string|max:200',
-            'residence_number' => 'sometimes|nullable|string|max:200',
+            'residence_number' => 'required|string|max:200',
             'residence_date' => 'sometimes|nullable|string',
             'class_id' => 'required|exists:classes,id',
             'class_room_id' => 'required|exists:class_rooms,id',
@@ -105,7 +106,7 @@ class StudentController extends Controller
 
         toastr(__('Updated Successfully'));
 
-        return redirect()->route('admin.student.index');
+        return redirect()->back();
     }
 
     public function changeStatus(Request $request)

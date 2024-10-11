@@ -1,10 +1,10 @@
 @extends('admin.layouts.master')
-@section('mainTitle', 'Footer')
+@section('mainTitle', __('Socials'))
 @section('content')
     <div class="card-header">
-        <h4>Footer Socials</h4>
+        <h4>{{ __('Social media') }}</h4>
         <div class="card-header-action">
-            <a href="{{ route('admin.socials.create') }}" class="btn btn-primary">+ Create New</a>
+            <a href="{{ route('admin.socials.create') }}" class="btn btn-primary">{{ __('+ Create new') }}</a>
         </div>
     </div>
     <div class="card-body">

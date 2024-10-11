@@ -17,7 +17,7 @@ class Material extends Model
 
     public function track()
     {
-        return $this->belongsTo(track::class);
+        return $this->belongsTo(Track::class);
     }
 
     public function lessons()

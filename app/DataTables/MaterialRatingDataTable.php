@@ -25,10 +25,13 @@ class MaterialRatingDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->addColumn(__('Material_name'), function ($query) {
-                return $query->name;
+                return $query->name . " (" . $query->track->name . ") ";
+            })
+            ->addColumn(__('Teacher'), function ($query) {
+                return $query->teachers->first()->name;
             })
             ->addColumn(__('action'), function ($query) {
-                $viewBtn = "<a href='" . route('admin.rating.material.materialRatingDetails', $query->id) . "'class='btn btn-sm mx-1 my-1 btn-warning'><i class='far fa-edit'></i>" . __('View ratings') . "</a>";
+                $viewBtn = "<a href='" . route('admin.rating.material.materialRatingDetails', $query->id) . "'class='btn btn-warning'><i class='far fa-edit'></i>" . __('View ratings') . "</a>";
                 return $viewBtn;
             })
             ->addColumn(__('Ratings_count'), function ($query) {
@@ -57,7 +60,7 @@ class MaterialRatingDataTable extends DataTable
      */
     public function query(Material $model): QueryBuilder
     {
-        return $model->withCount('ratings')
+        return $model->withCount('ratings')->with('track')->with('teachers')
             ->withCount('comments')
             ->withAvg('ratings', 'rating')
             ->withMin('ratings', 'rating')
@@ -95,6 +98,7 @@ class MaterialRatingDataTable extends DataTable
         return [
             Column::make(__('id')),
             Column::make(__('Material_name')),
+            Column::make(__('Teacher')),
             Column::make(__('Ratings_count')),
             Column::make(__('Minimum_rating')),
             Column::make(__('Average_rating')),

@@ -27,7 +27,7 @@ class TeacherMaterialsDataTable extends DataTable
         return (new EloquentDataTable($query))
 
             ->addColumn('name', function ($query) {
-                return  $query->name;
+                return  $query->name . " (" . $query->track->name . ")";
             })
             ->addColumn('action', function ($query) {
                 $deleteBtn = "<a href='" . route('admin.teacher.materials.destroy', ['materialId' => $query->id, 'teacherId' => $this->teacherId])  . "'class='btn btn-sm ml-1 my-1 btn-danger delete-item'><i class='fas fa-trash'></i>" . __('Delete') . "</a>";

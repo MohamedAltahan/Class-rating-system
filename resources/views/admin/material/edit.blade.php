@@ -1,9 +1,9 @@
 @extends('admin.layouts.master')
-@section('mainTitle', __('Study year'))
+@section('mainTitle', __('Materials'))
 @section('content')
 
     <div class="card-header">
-        <h4>{{ __('Update study year') }}</h4>
+        <h4>{{ __('Update material') }}</h4>
         <div class="card-header-action">
         </div>
     </div>

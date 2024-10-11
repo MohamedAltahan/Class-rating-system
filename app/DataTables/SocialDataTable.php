@@ -15,6 +15,7 @@ use Yajra\DataTables\Services\DataTable;
 
 class SocialDataTable extends DataTable
 {
+    protected $counter = 1;
     /**
      * Build the DataTable class.
      *
@@ -23,16 +24,21 @@ class SocialDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('action', function ($query) {
-                $editBtn = "<a href='" . route('admin.socials.edit', $query->id)  . "'class='btn btn-sm btn-primary'><i class='far fa-edit'></i>Edit</a>";
-                $deleteBtn = "<a href='" . route('admin.socials.destroy', $query->id)  . "'class='btn btn-sm ml-1 my-1 btn-danger delete-item'><i class='fas fa-trash'></i>Delete</a>";
+            ->addColumn(__('action'), function ($query) {
+                $editBtn = "<a href='" . route('admin.socials.edit', $query->id)  . "'class='btn btn-sm btn-primary'><i class='far fa-edit'></i>" . __('Edit') . "</a>";
+                $deleteBtn = "<a href='" . route('admin.socials.destroy', $query->id)  . "'class='btn btn-sm ml-1 my-1 btn-danger delete-item'><i class='fas fa-trash'></i>" . __('Delete') . "</a>";
                 return $editBtn . $deleteBtn;
             })
-
-            ->addColumn('icon', function ($query) {
+            ->addColumn(__('icon'), function ($query) {
                 return '<i style="font-size:25px" class="' . $query->icon . '"></i>';
             })
-            ->addColumn('status', function ($query) {
+            ->addColumn(__('Name'), function ($query) {
+                return $query->name;
+            })
+            ->addColumn(__('id'), function ($query) {
+                return $this->counter++;
+            })
+            ->addColumn(__('Status'), function ($query) {
                 if ($query->status == 'active') {
                     $button = '<label class="custom-switch mt-2">
                         <input checked type="checkbox" name="custom-switch-checkbox" data-id="' . $query->id . '" class="change-status custom-switch-input">
@@ -47,8 +53,8 @@ class SocialDataTable extends DataTable
 
                 return $button;
             })
-            ->rawColumns(['icon', 'action', 'status'])
-            ->setRowId('id');
+            ->rawColumns([__('icon'), __('action'), __('Status')])
+            ->setRowId(__('id'));
     }
 
     /**
@@ -87,11 +93,11 @@ class SocialDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::make('id'),
-            Column::make('name'),
-            Column::make('icon'),
-            Column::make('status'),
-            Column::computed('action')
+            Column::make(__('id')),
+            Column::make(__('Name')),
+            Column::make(__('icon')),
+            Column::make(__('Status')),
+            Column::computed(__('action'))
                 ->exportable(false)
                 ->printable(false)
                 ->width(160)
